@@ -1,0 +1,23 @@
+version: '3.7'
+services: 
+  db_projeto_tv:
+    image: mysql:5.7
+    container_name: db_projeto_tv
+    volumes: 
+      - "./mysql/data:/var/lib/mysql"
+    ports: 
+      - "3306:3306"
+    environment: 
+      - MYSQL_ROOT_PASSWORD=aMsEiozs
+      - MYSQL_DATABASE=projeto_tv
+  phpmyadmin_projeto_tv:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_projeto_tv
+    depends_on:
+      - db_projeto_tv
+    ports:
+      - 8001:80
+    environment:
+      MYSQL_ROOT_PASSWORD: aMsEiozs
+      PMA_ARBITRARY: 1
+    
