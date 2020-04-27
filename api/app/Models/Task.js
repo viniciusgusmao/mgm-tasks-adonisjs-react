@@ -4,6 +4,9 @@
 const Model = use('Model')
 
 class Task extends Model {
+  employees () {
+    return this.belongsToMany('App/Models/Employee')
+  }
 }
 
 module.exports = Task

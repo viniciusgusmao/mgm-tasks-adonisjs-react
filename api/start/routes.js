@@ -16,6 +16,13 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-Route.get('/', () => {
-  return { greeting: 'Hello world in JSON' }
-})
+// Route.group(() => {
+
+  Route.resource('companies', 'CompanyController').only(['show', 'index'])
+  Route.resource('customers', 'CustomerController').apiOnly()
+  Route.resource('projects', 'ProjectController').apiOnly()
+  Route.resource('tasks', 'TaskController').apiOnly()
+  Route.resource('employees', 'EmployeeController').apiOnly()
+
+// }).formats(['json'], true)
+
