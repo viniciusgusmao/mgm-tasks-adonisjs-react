@@ -20,13 +20,6 @@ const Element = use(`App/Models/${currentModel}`);
 let classes = {};
 classes[currentController] = class {
 
-  async index ({ request, response, view }) {
-    const elements = await Element
-      .query()
-      .with(indexObjParams.relationDependency)
-      .fetch()
-    response.send(elements)
-  }
 
   async store ({ request, response }) {
     const body = request.all()
@@ -45,17 +38,6 @@ classes[currentController] = class {
 
     response.send({ "success": true })
 
-  }
-
-  async show ({ params, request, response, view }) {
-    const { id } = params
-    const element = await Element
-      .query()
-      .where('id',id)
-      .with('employees')
-      .fetch();
-
-    response.send(element)
   }
 
   async update ({ params, request, response }) {

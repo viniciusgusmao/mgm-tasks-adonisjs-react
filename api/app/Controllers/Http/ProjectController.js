@@ -20,36 +20,10 @@ const Element = use(`App/Models/${currentModel}`);
 let classes = {};
 classes[currentController] = class {
 
-  async index ({ request, response, view }) {
-    const elements = await Element
-      .query()
-      .with(indexObjParams.relationDependency)
-      .fetch()
-    response.send(elements)
-  }
-
   async store ({ request, response }) {
     const body = request.all()
     const element = await Element.create(body)
     response.send(element);
-  }
-
-  async show ({ params, request, response, view }) {
-    const { id } = params
-    const element = await Element.find(id)
-    response.send(element)
-  }
-
-  async showWithTaskFilter ({params, request, response}) {
-    const { id } = params
-    const elements = await Element
-      .query()
-      .where('id',id)
-      .with('tasks', (builder) => {
-        builder.whereIn('status', ['EM ABERTO', 'EM DESENVOLVIMENTO'])
-      })
-      .fetch()
-    response.send(elements);
   }
 
   async update ({ params, request, response }) {

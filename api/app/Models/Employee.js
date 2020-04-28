@@ -4,9 +4,10 @@
 const Model = use('Model')
 
 class Employee extends Model {
-  // tasks () {
-  //   return this.belongsToMany('App/Models/Task')
-  // }
+  tasks () {
+    return this.belongsToMany('App/Models/Task').pivotTable('employee_task')
+  }
+
 }
 
 module.exports = Employee

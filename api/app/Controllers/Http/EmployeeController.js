@@ -17,23 +17,10 @@ const Element = use(`App/Models/${currentModel}`);
 let classes = {};
 classes[currentController] = class {
 
-  async index ({ request, response, view }) {
-    const elements = await Element
-      .query()
-      .fetch()
-    response.send(elements)
-  }
-
   async store ({ request, response }) {
     const body = request.all()
     const element = await Element.create(body)
     response.send(element);
-  }
-
-  async show ({ params, request, response, view }) {
-    const { id } = params
-    const element = await Element.find(id)
-    response.send(element)
   }
 
   async update ({ params, request, response }) {

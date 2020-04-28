@@ -7,6 +7,9 @@ class Customer extends Model {
   projects () {
     return this.hasMany('App/Models/Project')
   }
+  company () {
+    return this.belongsTo('App/Models/Company')
+  }
 }
 
 module.exports = Customer

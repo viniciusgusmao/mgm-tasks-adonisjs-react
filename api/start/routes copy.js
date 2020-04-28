@@ -16,15 +16,6 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-const ApolloServer = use('ApolloServer')
-
-const schema = require('../app/data/schema');
-
-Route.route('/graphql', ({ request, response }) => {
-    return ApolloServer.graphql({ schema }, request, response)
-}, ['GET','POST'])
-
-
 Route.resource('customers', 'CustomerController')
   .validator(new Map([
     [['customers.store','customers.update'], ['StoreCustomer']]

@@ -5,9 +5,7 @@ const Model = use('Model')
 
 class Task extends Model {
   employees () {
-    return this
-      .belongsToMany('App/Models/Employee')
-      .withTimestamps()
+    return this.belongsToMany('App/Models/Employee').pivotTable('employee_task').withTimestamps()
   }
   project(){
     return this.belongsTo('App/Models/Project')

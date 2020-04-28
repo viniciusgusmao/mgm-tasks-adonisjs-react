@@ -12,7 +12,7 @@ class TaskSchema extends Schema {
       table.datetime('start').notNullable()
       table.datetime('end').notNullable()
       table.enu('priority',['BAIXA', 'MÉDIA', 'ALTA']).notNullable()
-      table.enu('status',['APROVADO', 'ATIVO', 'EM PROGRESSO', 'ATRASADO', 'CANCELADO', 'COMPLETO']).notNullable()
+      table.enu('status',['EM ABERTO', 'EM DESENVOLVIMENTO', 'EM ANÁLISE', 'EM TESTE', 'RESOLVIDO']).notNullable()
       table.timestamps()
     })
   }
