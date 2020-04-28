@@ -19,8 +19,8 @@ const ApolloServer = use('ApolloServer')
 const schema = require('../app/data/schema');
 
 Route.route('/graphql', ({ request, response }) => {
-    return ApolloServer.graphql({ schema,  }, request, response)
-}, ['GET','POST'])
+    return ApolloServer.graphql({ schema }, request, response)
+}, ['POST'])
   .middleware(['auth'])
 
 Route.post('login','UserController.login');
