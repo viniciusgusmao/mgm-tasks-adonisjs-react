@@ -5,7 +5,12 @@ const Model = use('Model')
 
 class Task extends Model {
   employees () {
-    return this.belongsToMany('App/Models/Employee')
+    return this
+      .belongsToMany('App/Models/Employee')
+      .withTimestamps()
+  }
+  project(){
+    return this.belongsTo('App/Models/Project')
   }
 }
 

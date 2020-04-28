@@ -4,90 +4,64 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with employees
- */
-class EmployeeController {
-  /**
-   * Show a list of all employees.
-   * GET employees
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+/* --------------------------------------------- */
+const currentController = "EmployeeController";
+const currentModel = "Employee";
+const destroyObjParams = {
+  relationDependency: 'tasks',
+  messageFail: 'Existem tarefas ligados à esse funcionário.'
+}
+/* --------------------------------------------- */
+
+const Element = use(`App/Models/${currentModel}`);
+let classes = {};
+classes[currentController] = class {
+
   async index ({ request, response, view }) {
+    const elements = await Element
+      .query()
+      .fetch()
+    response.send(elements)
   }
 
-  /**
-   * Render a form to be used for creating a new employee.
-   * GET employees/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
-   * Create/save a new employee.
-   * POST employees
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
+    const body = request.all()
+    const element = await Element.create(body)
+    response.send(element);
   }
 
-  /**
-   * Display a single employee.
-   * GET employees/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+    const { id } = params
+    const element = await Element.find(id)
+    response.send(element)
   }
 
-  /**
-   * Render a form to update an existing employee.
-   * GET employees/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
-  }
-
-  /**
-   * Update employee details.
-   * PUT or PATCH employees/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
+    const { id } = params
+    const body = request.all()
+    const element = await Element.find(id)
+    Object.keys(body).map(item => {
+      element[item] = body[item]
+    })
+    await element.save()
+    response.send(element)
   }
 
-  /**
-   * Delete a employee with id.
-   * DELETE employees/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
+    const { id } = params
+    const { rows } = await Element
+      .query()
+      .where('id',id)
+      .has(destroyObjParams.relationDependency)
+      .fetch()
+
+    if (rows.length > 0)
+      response.send({ "success" : false, "message": destroyObjParams.messageFail })
+    else {
+      await element.delete();
+      response.send({ "success" : true })
+    }
   }
 }
 
-module.exports = EmployeeController
+module.exports = classes[currentController]

@@ -4,90 +4,80 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with projects
- */
-class ProjectController {
-  /**
-   * Show a list of all projects.
-   * GET projects
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+/* --------------------------------------------- */
+const currentController = "ProjectController";
+const currentModel = "Project";
+const indexObjParams = {
+  relationDependency: 'customer',
+}
+const destroyObjParams = {
+  relationDependency: 'tasks',
+  messageFail: 'Existem tarefas ligados à esse projeto.'
+}
+/* --------------------------------------------- */
+
+const Element = use(`App/Models/${currentModel}`);
+let classes = {};
+classes[currentController] = class {
+
   async index ({ request, response, view }) {
+    const elements = await Element
+      .query()
+      .with(indexObjParams.relationDependency)
+      .fetch()
+    response.send(elements)
   }
 
-  /**
-   * Render a form to be used for creating a new project.
-   * GET projects/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
-  }
-
-  /**
-   * Create/save a new project.
-   * POST projects
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
+    const body = request.all()
+    const element = await Element.create(body)
+    response.send(element);
   }
 
-  /**
-   * Display a single project.
-   * GET projects/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+    const { id } = params
+    const element = await Element.find(id)
+    response.send(element)
   }
 
-  /**
-   * Render a form to update an existing project.
-   * GET projects/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+  async showWithTaskFilter ({params, request, response}) {
+    const { id } = params
+    const elements = await Element
+      .query()
+      .where('id',id)
+      .with('tasks', (builder) => {
+        builder.whereIn('status', ['EM ABERTO', 'EM DESENVOLVIMENTO'])
+      })
+      .fetch()
+    response.send(elements);
   }
 
-  /**
-   * Update project details.
-   * PUT or PATCH projects/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
+    const { id } = params
+    const body = request.all()
+    const element = await Element.find(id)
+    Object.keys(body).map(item => {
+      element[item] = body[item]
+    })
+    await element.save()
+    response.send(element)
   }
 
-  /**
-   * Delete a project with id.
-   * DELETE projects/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
+    const { id } = params
+    const { rows } = await Element
+      .query()
+      .where('id',id)
+      .has(destroyObjParams.relationDependency)
+      .fetch()
+
+    if (rows.length > 0)
+      response.send({ "success" : false, "message": destroyObjParams.messageFail })
+    else {
+      await element.delete();
+      response.send({ "success" : true })
+    }
   }
 }
 
-module.exports = ProjectController
+module.exports = classes[currentController]

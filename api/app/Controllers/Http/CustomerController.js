@@ -4,66 +4,64 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
-/**
- * Resourceful controller for interacting with customers
- */
-class CustomerController {
-  /**
-   * Show a list of all customers.
-   * GET customers
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
+/* --------------------------------------------- */
+const currentController = "CustomerController";
+const currentModel = "Customer";
+const destroyObjParams = {
+  relationDependency: 'projects',
+  messageFail: 'Existem projetos ligados à esse cliente.'
+}
+/* --------------------------------------------- */
+
+const Element = use(`App/Models/${currentModel}`);
+let classes = {};
+classes[currentController] = class {
+
   async index ({ request, response, view }) {
+    const elements = await Element
+      .query()
+      .fetch()
+    response.send(elements)
   }
 
-  /**
-   * Create/save a new customer.
-   * POST customers
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async store ({ request, response }) {
+    const body = request.all()
+    const element = await Element.create(body)
+    response.send(element);
   }
 
-  /**
-   * Display a single customer.
-   * GET customers/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
   async show ({ params, request, response, view }) {
+    const { id } = params
+    const element = await Element.find(id)
+    response.send(element)
   }
 
-  /**
-   * Update customer details.
-   * PUT or PATCH customers/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async update ({ params, request, response }) {
+    const { id } = params
+    const body = request.all()
+    const element = await Element.find(id)
+    Object.keys(body).map(item => {
+      element[item] = body[item]
+    })
+    await element.save()
+    response.send(element)
   }
 
-  /**
-   * Delete a customer with id.
-   * DELETE customers/:id
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   */
   async destroy ({ params, request, response }) {
+    const { id } = params
+    const { rows } = await Element
+      .query()
+      .where('id',id)
+      .has(destroyObjParams.relationDependency)
+      .fetch()
+
+    if (rows.length > 0)
+      response.send({ "success" : false, "message": destroyObjParams.messageFail })
+    else {
+      await element.delete();
+      response.send({ "success" : true })
+    }
   }
 }
 
-module.exports = CustomerController
+module.exports = classes[currentController]

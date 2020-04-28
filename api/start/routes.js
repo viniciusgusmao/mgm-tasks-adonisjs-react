@@ -16,13 +16,35 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-// Route.group(() => {
+Route.resource('companies', 'CompanyController').only(['show', 'index'])
 
-  Route.resource('companies', 'CompanyController').only(['show', 'index'])
-  Route.resource('customers', 'CustomerController').apiOnly()
-  Route.resource('projects', 'ProjectController').apiOnly()
-  Route.resource('tasks', 'TaskController').apiOnly()
-  Route.resource('employees', 'EmployeeController').apiOnly()
+Route.resource('customers', 'CustomerController')
+  .validator(new Map([
+    [['customers.store','customers.update'], ['StoreCustomer']]
+  ]))
+  .apiOnly()
 
-// }).formats(['json'], true)
+Route.resource('projects', 'ProjectController')
+  .validator(new Map([
+    [['projects.store','projects.update'], ['StoreProject']]
+  ]))
+  .apiOnly()
+Route.get('projects/:id/tasks', 'ProjectController.showWithTaskFilter')
+
+Route.resource('tasks', 'TaskController')
+  .validator(new Map([
+    [['tasks.store','tasks.update'], ['StoreTask']]
+  ]))
+  .apiOnly()
+
+Route.post('tasks/:id/employees','TaskController.employee_tasks')
+
+
+Route.resource('employees', 'EmployeeController')
+  .validator(new Map([
+    [['employees.store','employees.update'], ['StoreEmployee']]
+  ]))
+  .apiOnly()
+
+
 
