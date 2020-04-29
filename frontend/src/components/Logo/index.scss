@@ -1,0 +1,27 @@
+@import 'assets/styles/_colors.scss';
+
+.container-logo{
+  display: flex;
+  height: 60px;
+  flex-direction: row;
+  img{
+    margin-right: 10px;
+    width: 60px;
+    height: 60px;
+  }
+  div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    span:first-child{
+      color: $textColorDarkPurple;
+      font-weight: bold;
+      font-size: 20px;
+    }
+    span:last-child{
+      color: $textColorDarkPurple;
+      font-size: 12px;
+      margin-top: 2px;
+    }
+  }
+}

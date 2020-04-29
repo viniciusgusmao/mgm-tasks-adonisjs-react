@@ -1,0 +1,25 @@
+@import 'assets/styles/_colors.scss';
+
+.container{
+  display:flex; 
+  flex: 1;
+  flex-direction: column;
+  justify-content:center;
+  align-items: center;
+  min-height:100vh;
+  
+  .login-box{
+    margin-top: 20px;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    width: 300px;
+    padding: 25px 45px;
+    overflow: hidden;
+    flex-direction: column;
+    h1{
+      color: $textColorDarkPurple
+    }
+  }
+}
+

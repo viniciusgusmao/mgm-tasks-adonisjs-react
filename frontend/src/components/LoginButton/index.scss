@@ -1,0 +1,11 @@
+@import 'assets/styles/_colors.scss';
+
+.login-button{
+  width: 100%;
+  color: white;
+  background-color: $textColorDarkPurple;
+  padding: 12px 5px;
+  border-style: none;
+  font-weight: bold;
+  border-radius: 8px;
+}
