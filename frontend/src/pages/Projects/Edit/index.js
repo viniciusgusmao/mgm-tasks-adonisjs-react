@@ -12,7 +12,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import Loading from 'components/Loading';
 
-const Edit = ({currentPath}) => {
+const Edit = ({currentPath, customersFill}) => {
   let { id } = useParams();
   
   const FETCH_PROJECT = gql`
@@ -33,13 +33,13 @@ const Edit = ({currentPath}) => {
  const { loading, error, data } = useQuery(FETCH_PROJECT);
  
  if (loading) return <Loading />;
- 
+ console.log(data)
  return (
     <Container>
       <Row>
-        <Col lg={12}><TitlePage title={`Atualizar projeto - ${data.fetchCustomer?.name.toUpperCase()}`} /></Col>
+        <Col lg={12}><TitlePage title={`Atualizar projeto - ${data.fetchProject?.name.toUpperCase()}`} /></Col>
       </Row>
-      <Form currentPath={currentPath} id={id} initialValues={data} />
+      <Form currentPath={currentPath} customersFill={customersFill} id={id} initialValues={data} />
     </Container>  
   );
 }

@@ -5,6 +5,9 @@ import { useHistory } from "react-router-dom";
 
 import ErrorMsg from 'components/ErrorMsg';
 import TextInput from 'components/FormFields/TextInput';
+import SelectInput from 'components/FormFields/SelectInput';
+import DateInput from 'components/FormFields/DateInput';
+import TimeInput from 'components/FormFields/TimeInput';
 
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
@@ -13,18 +16,29 @@ import Button from 'components/Button'
 import BackButtonForm from 'components/BackButtonForm'
 
 import { update } from 'services/crud';
-import validation from 'validations/customers';
+import validation from 'validations/projects';
 import BaseForm from 'pages/BaseForm';
+import { getAvailableProjectStatus, joinDateTimeAndPrepareToDB } from 'utils'
 
-const Form = ({currentPath, initialValues: initialValues_, id}) => {
-  const [error, setError] = useState('')
+const Form = ({currentPath, customersFill, initialValues: initialValues_, id}) => {
+  const [errorApiRequest, setErrorApiRequest] = useState([])
   const history = useHistory();
-
+  
   const initialValues = {}
   const data = initialValues_.fetchProject;
   for(let key in data){
-    if (key != "customer")
-      initialValues[key] = data[key];
+    if (key !== "customer"){
+      if(key === "start"){
+        let d = data[key].split(' ');
+        initialValues['start_date'] = d[0];
+        initialValues['start_time'] = d[1];
+      } else if(key === "end"){
+        let d = data[key].split(' ');
+        initialValues['end_date'] = d[0];
+        initialValues['end_time'] = d[1];
+      } else
+        initialValues[key] = data[key];
+    }
     else
       initialValues['customer_id'] = data[key]['id'];
   }
@@ -35,21 +49,23 @@ const Form = ({currentPath, initialValues: initialValues_, id}) => {
         <Formik
             initialValues={initialValues}
             validationSchema={validation}
-            onSubmit={(values) => {            
+            onSubmit={(values) => { 
+              const dataMod = joinDateTimeAndPrepareToDB(values);
               setLoading(true)
-              setError('');
-              update(currentPath,id,values)
+              setErrorApiRequest([])
+              update(currentPath,id,dataMod)
                 .then((response) => {
                   const { data } = response;
                   if (data.hasOwnProperty('length')){
-                    let errors = data.map((item,idx) => item[idx] = item.message).join('<br>');
-                    setError(errors);
+                    let errors = data.map((item,idx) => item[idx] = item.message);
+                    setErrorApiRequest(errors);
                   } else
-                    execToast(true,"Atualização realizada com sucesso",'success',currentPath)
+                    execToast(true,"Cadastro realizado com sucesso",'success',currentPath)
                   
                   setLoading(false)
                 })
                 .catch((error) => {
+                  console.log(error)
                   execToast(true,"Sua sessão expirou",'fail','/login')
                   setLoading(false)
                 })
@@ -65,7 +81,7 @@ const Form = ({currentPath, initialValues: initialValues_, id}) => {
             }) => (
               <div className="container-form">
                 <Row>
-                  <Col lg={6}>
+                  <Col lg={4}>
                     <TextInput 
                       label="Nome*" 
                       value={values.name} 
@@ -76,125 +92,100 @@ const Form = ({currentPath, initialValues: initialValues_, id}) => {
                       <ErrorMsg description={errors.name} />
                     )}
                   </Col>
-                  <Col lg={3}>
-                    <TextInput 
-                      label="E-mail*" 
-                      value={values.email} 
-                      handleChange={handleChange('email')}
-                      onSetFieldTouched={() => setFieldTouched('email')}
-                    />
-                    {touched.email && errors.email && (
-                      <ErrorMsg description={errors.email} />
-                    )}
-                  </Col>
-                  <Col lg={3}>
-                    <TextInput 
-                      label="Telefone" 
-                      value={values.cellphone} 
-                      handleChange={handleChange('cellphone')}
-                      onSetFieldTouched={() => setFieldTouched('cellphone')}
-                    />
-                    {touched.cellphone && errors.cellphone && (
-                      <ErrorMsg description={errors.cellphone} />
-                    )}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col lg={6}>
-                    <TextInput 
-                      label="CPF" 
-                      value={values.cpf} 
-                      handleChange={handleChange('cpf')}
-                      onSetFieldTouched={() => setFieldTouched('cpf')}
-                    />
-                    {touched.cpf && errors.cpf && (
-                      <ErrorMsg description={errors.cpf} />
-                    )}
-                  </Col>
-                  <Col lg={6}>
-                    <TextInput 
-                      label="CNPJ" 
-                      value={values.cnpj} 
-                      handleChange={handleChange('cnpj')}
-                      onSetFieldTouched={() => setFieldTouched('cnpj')}
-                    />
-                    {touched.cnpj && errors.cnpj && (
-                      <ErrorMsg description={errors.cnpj} />
-                    )}
-                  </Col>
-                </Row>
-                <Row>
                   <Col lg={5}>
                     <TextInput 
-                      label="Rua" 
-                      value={values.street} 
-                      handleChange={handleChange('street')}
-                      onSetFieldTouched={() => setFieldTouched('street')}
+                      label="Descrição" 
+                      value={values.description} 
+                      handleChange={handleChange('description')}
+                      onSetFieldTouched={() => setFieldTouched('description')}
                     />
-                    {touched.street && errors.street && (
-                      <ErrorMsg description={errors.street} />
-                    )}
                   </Col>
                   <Col lg={3}>
                     <TextInput 
-                      label="Bairro" 
-                      value={values.district} 
-                      handleChange={handleChange('district')}
-                      onSetFieldTouched={() => setFieldTouched('district')}
+                      label="Valor*" 
+                      value={values.cost} 
+                      handleChange={handleChange('cost')}
+                      onSetFieldTouched={() => setFieldTouched('cost')}
                     />
-                    {touched.district && errors.district && (
-                      <ErrorMsg description={errors.district} />
+                    {touched.cost && errors.cost && (
+                      <ErrorMsg description={errors.cost} />
                     )}
                   </Col>
-                  <Col lg={2}>
-                    <TextInput 
-                      label="Número" 
-                      value={values.number} 
-                      handleChange={handleChange('number')}
-                      onSetFieldTouched={() => setFieldTouched('number')}
+                </Row>
+                <Row>
+                  <Col lg={3}>
+                    <DateInput 
+                      label="Data inicial*" 
+                      value={values.start_date} 
+                      handleChange={handleChange('start_date')}
+                      onSetFieldTouched={() => setFieldTouched('start_date')}
                     />
-                    {touched.number && errors.number && (
-                      <ErrorMsg description={errors.number} />
+                    {touched.start_date && errors.start_date && (
+                      <ErrorMsg description={errors.start_date} />
                     )}
                   </Col>
-                  <Col lg={2}>
-                    <TextInput 
-                      label="CEP" 
-                      value={values.cep} 
-                      handleChange={handleChange('cep')}
-                      onSetFieldTouched={() => setFieldTouched('cep')}
+                  <Col lg={3}>
+                    <TimeInput 
+                      label="Horário inicial*" 
+                      value={values.start_time} 
+                      handleChange={handleChange('start_time')}
+                      onSetFieldTouched={() => setFieldTouched('start_time')}
                     />
-                    {touched.cep && errors.cep && (
-                      <ErrorMsg description={errors.cep} />
+                    {touched.start_time && errors.start_time && (
+                      <ErrorMsg description={errors.start_time} />
+                    )}
+                  </Col>
+                  <Col lg={3}>
+                    <DateInput 
+                      label="Data final*" 
+                      value={values.end_date} 
+                      handleChange={handleChange('end_date')}
+                      onSetFieldTouched={() => setFieldTouched('end_date')}
+                    />
+                    {touched.end_date && errors.end_date && (
+                      <ErrorMsg description={errors.end_date} />
+                    )}
+                  </Col>
+                  <Col lg={3}>
+                    <TimeInput 
+                      label="Horário final*" 
+                      value={values.end_time} 
+                      handleChange={handleChange('end_time')}
+                      onSetFieldTouched={() => setFieldTouched('end_time')}
+                    />
+                    {touched.end_time && errors.end_time && (
+                      <ErrorMsg description={errors.end_time} />
                     )}
                   </Col>
                 </Row>
                 <Row>
                   <Col lg={6}>
-                    <TextInput 
-                      label="Cidade" 
-                      value={values.city} 
-                      handleChange={handleChange('city')}
-                      onSetFieldTouched={() => setFieldTouched('city')}
+                    <SelectInput 
+                      label="Cliente*"
+                      handleChange={handleChange('customer_id')}
+                      onSetFieldTouched={() => setFieldTouched('customer_id')}
+                      value={values.customer_id}
+                      fill={customersFill?.fetchCompany?.customers}
                     />
-                    {touched.city && errors.city && (
-                      <ErrorMsg description={errors.city} />
+                    {touched.customer_id && errors.customer_id && (
+                      <ErrorMsg description={errors.customer_id} />
                     )}
                   </Col>
                   <Col lg={6}>
-                    <TextInput 
-                      label="Estado" 
-                      value={values.state} 
-                      handleChange={handleChange('state')}
-                      onSetFieldTouched={() => setFieldTouched('state')}
+                    <SelectInput 
+                      label="Status*"
+                      handleChange={handleChange('status')}
+                      onSetFieldTouched={() => setFieldTouched('status')}
+                      value={values.customer_id}
+                      fill={getAvailableProjectStatus()}
                     />
-                    {touched.state && errors.state && (
-                      <ErrorMsg description={errors.state} />
+                    {touched.status && errors.status && (
+                      <ErrorMsg description={errors.status} />
                     )}
                   </Col>
                 </Row>
                 <Row>
-                    <Col lg={12}>{error != '' && <ErrorMsg description={error} />}</Col>
+                    <Col lg={12}>{errorApiRequest.length > 0 && <ErrorMsg description={errorApiRequest} />}</Col>
                 </Row>
                 <Row>
                   <Col lg={8}></Col>
