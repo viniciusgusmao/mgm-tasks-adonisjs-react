@@ -8,11 +8,13 @@ import Divider from 'components/Divider';
 import ErrorMsg from 'components/ErrorMsg';
 import LoginButton from 'components/LoginButton';
 import TextInput from 'components/FormFields/TextInput';
+import Loading from 'components/Loading';
 
 import { handleLogin } from 'services/user';
 
 const Form = () => {
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
   const userValidation = yup.object().shape({
     email: yup.string().required('O e-mail é obrigatório')
@@ -21,23 +23,27 @@ const Form = () => {
   });
 
   return (
+    <>
+    <Loading loading={loading} />
     <Formik
           initialValues={{
-            email: '',
-            password: '',
+            email: 'suporte@tecnovix.com.br',
+            password: 'tecnovix@123',
           }}
           validationSchema={userValidation}
           onSubmit={(values) => {
             const { email, password } = values;
-
+            setLoading(true);
             handleLogin(email, password)
               .then((response) => {
                 const { access_token: { token }, user: { email, name, id } } = response.data
                 const userTv = { token, id, email, name }
+                setLoading(true);
                 localStorage.setItem('@user_gp',JSON.stringify(userTv))
                 history.push('/dashboard');
               })
               .catch((error) => {
+                setLoading(false);
                 setError("Login ou senha incorretos")
               })
           }}
@@ -79,6 +85,7 @@ const Form = () => {
             </div>
           )}
     </Formik>
+    </>
   );
 };
 

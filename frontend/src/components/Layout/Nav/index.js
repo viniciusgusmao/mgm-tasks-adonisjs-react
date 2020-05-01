@@ -4,9 +4,11 @@ import { GoDashboard, GoProject } from 'react-icons/go';
 import { FaUserFriends, FaTasks, FaNetworkWired } from 'react-icons/fa';
 import { RiLogoutBoxLine } from 'react-icons/ri';
 import { useHistory } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Nav = () => {
   const history = useHistory();
+  let location = useLocation();
 
   const logout = () => {
     localStorage.setItem('@user_gp',null);
@@ -16,32 +18,32 @@ const Nav = () => {
   return (
     <div className="container-nav">
       <div>
-        <a href="#" className="active">
+        <Link to="/dashboard" className={location.pathname.indexOf('dashboard') !== -1 ? 'active': ''}>
           <GoDashboard size={20} />
           <span>Dashboard</span>
-        </a>
-        <a href="#">
+        </Link>
+        <Link to="/customers" className={location.pathname.indexOf('customers') !== -1 ? 'active': ''}>
           <FaNetworkWired size={20} />
           <span>Clientes</span>
-        </a>
-        <a href="#">
+        </Link>
+        <Link to="/projects" className={location.pathname.indexOf('projects') !== -1 ? 'active': ''}>
           <GoProject size={20} />
           <span>Projetos</span>
-        </a>
-        <a href="#">
+        </Link>
+        <Link to="/tasks" className={location.pathname.indexOf('tasks') !== -1 ? 'active': ''}>
           <FaTasks size={20} />
           <span>Tarefas</span>
-        </a>
-        <a href="#">
+        </Link>
+        <Link to="/employees" className={location.pathname.indexOf('employees') !== -1 ? 'active': ''}>
           <FaUserFriends size={20} />
           <span>Funcionários</span>
-        </a>
+        </Link>
       </div>
       <div>
-        <a href="#" onClick={logout} className="logout">
+        <button onClick={logout} className="logout">
           <RiLogoutBoxLine size={20} />
           <span>Logout</span>
-        </a>
+        </button>
       </div>
     </div>
   );

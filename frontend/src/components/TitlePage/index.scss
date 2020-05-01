@@ -1,0 +1,10 @@
+@import 'assets/styles/_variables.scss';
+
+.container-title-page{
+  h1{
+    color: $textColorDarkPurple;
+    margin: 0;
+    font-size: $fontSizeNav;
+    font-weight: bold;
+  }
+}

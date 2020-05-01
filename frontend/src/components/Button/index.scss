@@ -1,0 +1,14 @@
+@import 'assets/styles/_variables.scss';
+
+.new-item{
+  background-color: $textColorDarkBlue;
+  border-style: none;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 5px;
+  padding: 8px;
+  color: white;
+  display: block;
+  width: 100%;
+  box-shadow: 2px 2px 2px #888888;
+}

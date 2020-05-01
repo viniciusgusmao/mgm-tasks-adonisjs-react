@@ -1,0 +1,16 @@
+@import 'assets/styles/_variables.scss';
+
+.back-button-form{
+  background-color: white;
+  border-style: solid;
+  border-color: $textColorLightGray;
+  border-width: 1px;
+  font-weight: bold;
+  font-size: 12px;
+  border-radius: 5px;
+  padding: 8px;
+  color: $textColorDarkBlue;
+  display: block;
+  width: 100%;
+  box-shadow: 2px 2px 2px #888888;
+}

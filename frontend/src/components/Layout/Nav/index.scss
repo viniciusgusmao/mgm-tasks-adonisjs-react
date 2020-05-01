@@ -5,6 +5,25 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 500px;
+  margin-top: -14px;
+  button.logout{
+    color: $fontColorNavActive;
+    background: none;
+    border-style: solid;
+    padding: 10px;
+    width: 80%;
+    text-align: left;
+    padding-left: 30px;
+    font-size: $fontSizeNav;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    background-color: $backgroundColorNav;
+    border: none;
+    font-weight: bold;
+    svg{
+      margin-right: 10px;
+    }
+  }
   a{
     color: $fontColorNav;
     text-decoration: none;
@@ -18,9 +37,6 @@
     width: 80%;
     span{
       margin-left: 10px;
-    }
-    &.logout{
-      color: $fontColorNavActive;
     }
     &.active{
       background-color: $backgroundColorNav;

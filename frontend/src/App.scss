@@ -5,3 +5,10 @@ body {
   font-family: sans-serif;
 }
 
+.container-form{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  .row > div {
+    margin: 5px 0px;
+  }
+}
