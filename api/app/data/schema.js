@@ -9,6 +9,7 @@ const typeDefs = `
     id: Int!
     name: String!
     email: String!
+    customers: [Customer]
   }
   type Customer {
     id: Int!

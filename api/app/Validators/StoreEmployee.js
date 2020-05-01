@@ -3,7 +3,7 @@
 class StoreEmployee {
   get rules () {
     return {
-      email: 'required|email|unique:employees',
+      email: 'required|email',
       name: 'required'
     }
   }

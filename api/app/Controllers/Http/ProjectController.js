@@ -22,8 +22,12 @@ classes[currentController] = class {
 
   async store ({ request, response }) {
     const body = request.all()
-    const element = await Element.create(body)
-    response.send(element);
+    try {
+      const element = await Element.create(body)
+      response.send(element);
+    } catch(e){
+      response.send(String(e));
+    }
   }
 
   async update ({ params, request, response }) {

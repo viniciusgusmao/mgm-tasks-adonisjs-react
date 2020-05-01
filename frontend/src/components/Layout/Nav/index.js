@@ -8,33 +8,33 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Nav = () => {
   const history = useHistory();
-  let location = useLocation();
-
+  const location = useLocation();
+  const { pathname } = location;
   const logout = () => {
     localStorage.setItem('@user_gp',null);
     history.push('/login');
   }
-
+  console.log(pathname)
   return (
     <div className="container-nav">
       <div>
-        <Link to="/dashboard" className={location.pathname.indexOf('dashboard') !== -1 ? 'active': ''}>
+        <Link to="/dashboard" className={(pathname.indexOf('dashboard') !== -1 || pathname == "" || pathname == "/") ? 'active': ''}>
           <GoDashboard size={20} />
           <span>Dashboard</span>
         </Link>
-        <Link to="/customers" className={location.pathname.indexOf('customers') !== -1 ? 'active': ''}>
+        <Link to="/customers" className={pathname.indexOf('customers') !== -1 ? 'active': ''}>
           <FaNetworkWired size={20} />
           <span>Clientes</span>
         </Link>
-        <Link to="/projects" className={location.pathname.indexOf('projects') !== -1 ? 'active': ''}>
+        <Link to="/projects" className={pathname.indexOf('projects') !== -1 ? 'active': ''}>
           <GoProject size={20} />
           <span>Projetos</span>
         </Link>
-        <Link to="/tasks" className={location.pathname.indexOf('tasks') !== -1 ? 'active': ''}>
+        <Link to="/tasks" className={pathname.indexOf('tasks') !== -1 ? 'active': ''}>
           <FaTasks size={20} />
           <span>Tarefas</span>
         </Link>
-        <Link to="/employees" className={location.pathname.indexOf('employees') !== -1 ? 'active': ''}>
+        <Link to="/employees" className={pathname.indexOf('employees') !== -1 ? 'active': ''}>
           <FaUserFriends size={20} />
           <span>Funcionários</span>
         </Link>

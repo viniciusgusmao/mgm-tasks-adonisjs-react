@@ -9,9 +9,9 @@ import {
 } from "react-router-dom";
 
 import Layout from 'pages';
-import Index from './Index';
-import Create from './Create';
-import Edit from './Edit';
+import Index from 'pages/Customers/Index';
+import Create from 'pages/Customers/Create';
+import Edit from 'pages/Customers/Edit';
 
 const Customers = () => {
   let { path } = useRouteMatch();

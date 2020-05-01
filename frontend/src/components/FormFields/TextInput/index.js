@@ -4,7 +4,7 @@ import "./index.scss";
 const TextInput = ({ label, placeholder = '', value, handleChange, secure=false }) => (
     <div className="container-input-text">
       <label>{label}</label>
-      <input type={secure ? 'password' : 'text'} placeholder={placeholder} value={value} onChange={handleChange} />
+      <input type={secure ? 'password' : 'text'} placeholder={placeholder} value={(typeof value) == 'object' ? '': value } onChange={handleChange} />
     </div>
 );
 

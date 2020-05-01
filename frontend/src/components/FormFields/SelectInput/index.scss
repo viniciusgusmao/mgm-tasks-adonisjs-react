@@ -1,20 +1,6 @@
-@import "~bootstrap/scss/bootstrap";
-@import "assets/styles/variables";
+@import 'assets/styles/_variables.scss';
 
-body {
-  background-image: linear-gradient(to left, #F3F7FE, #C9D5E9);
-  font-family: sans-serif;
-}
-
-.container-form{
-  padding-top: 20px;
-  padding-bottom: 20px;
-  .row > div {
-    margin: 5px 0px;
-  }
-}
-
-.container-input-text{
+.container-input-select{
   display: flex;
   flex-direction: column;
   label{
@@ -22,11 +8,12 @@ body {
     color: $textColorDarkPurple;
     margin-bottom: 8px;
   }
-  input{
+  select{
+    background-color: white;
+    font-size: 12px;
     border-radius: 5px;
     border-color: $borderColorInputText;
     width: 100%;
-    font-size: 12px;
     border-width: 1px;
     padding: 10px;
     border-style: solid;
@@ -34,5 +21,3 @@ body {
     color: $textColorDarkPurple;
   }
 }
-
-

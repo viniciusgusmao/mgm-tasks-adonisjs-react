@@ -12,8 +12,6 @@ import { isLogin  } from 'utils';
 
 const Layout = ({children}) => {
   
-  console.log(isLogin())
-
   if (!isLogin())
     return <Redirect to="/login" />
 

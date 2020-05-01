@@ -9,20 +9,27 @@ const Employee = use('App/Models/Employee');
 const resolvers = {
   Query: {
     async fetchCompany(_, { id }){
-      const element = await Company.find(id)
-      return element.toJSON();
+      const elements = await Company
+        .query()
+        .where('id',id)
+        .with('customers')
+        .fetch()
+      return elements.toJSON()[0];
     },
     async allCustomers(){
       const elements = await Customer
         .query()
         .with('company')
         .fetch()
-      console.log('teste');
       return elements.toJSON()
     },
     async fetchCustomer(_, { id }){
-      const element = await Customer.find(id)
-      return element.toJSON();
+      const elements = await Customer
+        .query()
+        .where('id',id)
+        .with('company')
+        .fetch()
+      return elements.toJSON()[0];
     },
     async allProjects(){
       const elements = await Project
@@ -43,8 +50,13 @@ const resolvers = {
       return elements.toJSON();
     },
     async fetchProject(_,{ id }){
-      const element = await Project.find(id)
-      return element.toJSON();
+      const element = await Project
+        .query()
+        .where('id',id)
+        .with('customer')
+        .fetch();
+      return element.toJSON()[0];
+
     },
     async allTasks(){
       const elements = await Task
@@ -61,7 +73,7 @@ const resolvers = {
         .where('id',id)
         .with('employees')
         .fetch();
-      return element.toJSON();
+      return element.toJSON()[0];
     },
     async allEmployees(){
       const elements = await Employee

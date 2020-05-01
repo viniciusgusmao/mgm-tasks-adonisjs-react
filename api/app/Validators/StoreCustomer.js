@@ -3,10 +3,10 @@
 class StoreCustomer {
   get rules () {
     return {
-      email: 'required|email|unique:customers',
+      email: 'required|email',
       name: 'required',
       company_id: 'required',
-      cpf: 'min:13|max:14|unique:customers',
+      cpf: 'min:13|max:14',
       cnpj: 'unique:customers',
     }
   }

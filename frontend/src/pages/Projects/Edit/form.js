@@ -12,46 +12,40 @@ import Col from 'react-bootstrap/Col'
 import Button from 'components/Button'
 import BackButtonForm from 'components/BackButtonForm'
 
-import { store } from 'services/crud';
+import { update } from 'services/crud';
 import validation from 'validations/customers';
 import BaseForm from 'pages/BaseForm';
-import { getIdCompany } from 'utils'
 
-const Form = ({currentPath}) => {
+const Form = ({currentPath, initialValues: initialValues_, id}) => {
   const [error, setError] = useState('')
   const history = useHistory();
-  const company_id = getIdCompany();
+
+  const initialValues = {}
+  const data = initialValues_.fetchProject;
+  for(let key in data){
+    if (key != "customer")
+      initialValues[key] = data[key];
+    else
+      initialValues['customer_id'] = data[key]['id'];
+  }
 
   return (
     <BaseForm>
       {(setLoading, execToast) => (
         <Formik
-            initialValues={{
-              name: '',
-              email: '',
-              cellphone: '',
-              street: '',
-              number: '',
-              district: '',
-              city: '',
-              state: '',
-              cep: '',
-              company_id,
-              cpf: '',
-              cnpj: '',
-            }}
+            initialValues={initialValues}
             validationSchema={validation}
             onSubmit={(values) => {            
               setLoading(true)
               setError('');
-              store(currentPath,values)
+              update(currentPath,id,values)
                 .then((response) => {
                   const { data } = response;
                   if (data.hasOwnProperty('length')){
                     let errors = data.map((item,idx) => item[idx] = item.message).join('<br>');
                     setError(errors);
                   } else
-                    execToast(true,"Cadastro realizado com sucesso",'success',currentPath)
+                    execToast(true,"Atualização realizada com sucesso",'success',currentPath)
                   
                   setLoading(false)
                 })
@@ -200,7 +194,7 @@ const Form = ({currentPath}) => {
                   </Col>
                 </Row>
                 <Row>
-                    <Col lg={12}>{error !== "" && <ErrorMsg description={error} />}</Col>
+                    <Col lg={12}>{error != '' && <ErrorMsg description={error} />}</Col>
                 </Row>
                 <Row>
                   <Col lg={8}></Col>
