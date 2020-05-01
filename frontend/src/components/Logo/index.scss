@@ -1,27 +1,25 @@
-@import 'assets/styles/_colors.scss';
+@import 'assets/styles/_variables.scss';
 
 .container-logo{
   display: flex;
-  height: 60px;
+  height: 40px;
   flex-direction: row;
-  img{
+  svg{
     margin-right: 10px;
-    width: 60px;
-    height: 60px;
   }
   div{
     display: flex;
     flex-direction: column;
     justify-content: center;
     span:first-child{
-      color: $textColorDarkPurple;
+      color: $textColorDarkBlue;
       font-weight: bold;
       font-size: 20px;
     }
     span:last-child{
-      color: $textColorDarkPurple;
+      color: $textColorDarkBlue;
       font-size: 12px;
-      margin-top: 2px;
+      margin-top: -6px;
     }
   }
 }

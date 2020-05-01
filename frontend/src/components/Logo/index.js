@@ -1,12 +1,13 @@
 import React from 'react';
+import { GoProject } from 'react-icons/go'
 import "./index.scss";
 
 const Logo = () => (
     <div className="container-logo">
-        <img src={require('../../assets/images/logo.png')} alt="logo" />
+        <GoProject size={40} />
         <div>
-            <span>Tecnovix</span>
-            <span>Soluções Inteligentes</span>
+            <span>Gestor</span>
+            <span>de projetos</span>
         </div>
     </div>
 );

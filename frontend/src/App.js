@@ -1,12 +1,16 @@
-import React from 'react';
-import "./assets/normalize.css";
+import React, { useEffect } from 'react';
 import "./App.scss";
+import "./assets/normalize.css";
 
 import Routes from './routes';
 
-const App = () => (
-    <Routes />
-);
-
+const App = () => {
+    useEffect(() => {
+        document.title = "Gestor de Projetos"
+    },[])    
+    return (
+        <Routes />
+    )
+}
 
 export default App;

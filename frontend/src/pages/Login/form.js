@@ -1,7 +1,7 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import axios from 'axios';
+
 import { useHistory } from "react-router-dom";
 
 import Divider from 'components/Divider';
@@ -9,9 +9,10 @@ import ErrorMsg from 'components/ErrorMsg';
 import LoginButton from 'components/LoginButton';
 import TextInput from 'components/FormFields/TextInput';
 
-import urls from 'res/urls';
+import { handleLogin } from 'services/user';
 
 const Form = () => {
+  const [error, setError] = useState('')
   const history = useHistory();
   const userValidation = yup.object().shape({
     email: yup.string().required('O e-mail é obrigatório')
@@ -28,15 +29,16 @@ const Form = () => {
           validationSchema={userValidation}
           onSubmit={(values) => {
             const { email, password } = values;
-            axios.post(urls.login,{ email, password })
+
+            handleLogin(email, password)
               .then((response) => {
                 const { access_token: { token }, user: { email, name, id } } = response.data
                 const userTv = { token, id, email, name }
-                localStorage.setItem(`@user${id}`,JSON.stringify(userTv))
+                localStorage.setItem('@user_gp',JSON.stringify(userTv))
                 history.push('/dashboard');
               })
               .catch((error) => {
-                console.log(error)
+                setError("Login ou senha incorretos")
               })
           }}
         >
@@ -72,6 +74,7 @@ const Form = () => {
                 <ErrorMsg description={errors.password} />
               )}
               <Divider height={20} />
+              {error != '' && <><ErrorMsg description={error} /><Divider height={20} /></>}
               <LoginButton title="Entrar" handleSubmit={handleSubmit} />
             </div>
           )}

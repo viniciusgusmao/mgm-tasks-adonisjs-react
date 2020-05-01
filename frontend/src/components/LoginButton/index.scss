@@ -1,4 +1,4 @@
-@import 'assets/styles/_colors.scss';
+@import 'assets/styles/_variables.scss';
 
 .login-button{
   width: 100%;
@@ -8,4 +8,9 @@
   border-style: none;
   font-weight: bold;
   border-radius: 8px;
+  transition: transform 0.1s;
+  &:hover{
+    transform: scale(1.02) ;
+    filter: brightness(110%)
+  }
 }

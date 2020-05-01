@@ -1,0 +1,35 @@
+@import 'assets/styles/_variables.scss';
+
+.container-nav{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 500px;
+  a{
+    color: $fontColorNav;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 13px;
+    font-size: $fontSizeNav;
+    border-right: 20px;
+    padding-left: 30px;
+    display: flex;
+    align-content: center;
+    width: 80%;
+    span{
+      margin-left: 10px;
+    }
+    &.logout{
+      color: $fontColorNavActive;
+    }
+    &.active{
+      background-color: $backgroundColorNav;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      color: $fontColorNavActive;
+      svg{
+        color: $baseOrange;
+      }
+    }
+  }
+}

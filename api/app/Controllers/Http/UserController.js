@@ -15,11 +15,11 @@ class UserController {
       if (await auth.attempt(email, password)) {
         let company = await Company.findBy('email', email)
         let accessToken = await auth.generate(company)
-        return response.json({"user":company, "access_token": accessToken})
+        return response.json({ "user": company, "access_token": accessToken})
       }
     }
     catch (e) {
-      return response.json({message: 'Você precisa primeiro se cadastrar.'})
+      return response.json({ "error": String(e)})
     }
   }
 

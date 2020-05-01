@@ -12,10 +12,13 @@ import Dashboard from 'pages/Dashboard';
 const Routes = () => (
   <Router>
     <Switch>
-      <Route path="/login" exact>
+      <Route path="/login">
         <Login />
       </Route>
-      <Route path="/dashboard" exact>
+      <Route path="/" exact>
+        <Dashboard />
+      </Route>
+      <Route path="/dashboard">
         <Dashboard />
       </Route>
     </Switch>

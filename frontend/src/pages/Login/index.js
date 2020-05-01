@@ -4,7 +4,7 @@ import FormLogin from './form';
 import "./index.scss";
 
 const Login = () => (
-  <div className="container">
+  <div className="container-login">
     <Logo />
     <div className="login-box">
         <h1>Login</h1>

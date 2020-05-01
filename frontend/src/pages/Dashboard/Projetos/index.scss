@@ -1,0 +1,24 @@
+$colors: (color1: brown, color2: cadetblue, color3: chocolate, color4: darkorchid, color5: darkslateblue, color6: firebrick);
+
+@each $key, $color in $colors {
+  .#{$color}-background {
+      background: linear-gradient(0deg, transparent, rgba(0, 0, 0, 0.2));
+      background-color: $color;
+      overflow: hidden;
+      margin: 3px;
+      border-radius: 6px;
+      color: white;
+      display: flex;
+      padding: 15px;
+      padding-top: 35px;
+      p{
+        margin: 0;
+        font-weight: bold;
+        font-size: 14px;
+      }
+      span{
+        font-size: 12px;
+      }
+
+  }
+}

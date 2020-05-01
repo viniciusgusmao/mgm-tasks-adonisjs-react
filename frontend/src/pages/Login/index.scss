@@ -1,6 +1,6 @@
-@import 'assets/styles/_colors.scss';
+@import 'assets/styles/_variables.scss';
 
-.container{
+.container-login{
   display:flex; 
   flex: 1;
   flex-direction: column;
@@ -13,11 +13,14 @@
     display: flex;
     background-color: white;
     border-radius: 10px;
-    width: 300px;
+    width: 350px;
     padding: 25px 45px;
     overflow: hidden;
     flex-direction: column;
     h1{
+      font-size: 25px;
+      margin: 10px 0px;
+      font-weight: bold;
       color: $textColorDarkPurple
     }
   }
