@@ -39,7 +39,7 @@ const Projects = () => {
         <Route path={`${path}/create`}>
           <Create currentPath={path} customersFill={data} />
         </Route>
-        <Route path={`${path}/edit/:id`}>
+        <Route path={`${path}/:id/edit`}>
           <Edit currentPath={path} customersFill={data} />
         </Route>
       </Switch>

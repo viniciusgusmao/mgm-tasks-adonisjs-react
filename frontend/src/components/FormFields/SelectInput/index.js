@@ -7,8 +7,10 @@ const SelectInput = ({ label, placeholder = '', value = '', handleChange, fill =
       <select
         placeholder={placeholder} 
         onChange={handleChange}
+        defaultValue={value}
       >
-        {fill.map(item => <option key={item.id} selected={item.id === value ? true : false} value={item.id}>{item.name}</option>)}
+        <option key="0" value=""></option>
+        {fill.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}
         
       </select>
     </div>

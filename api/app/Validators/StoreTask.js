@@ -7,7 +7,7 @@ class StoreTask {
       project_id: 'required',
       start: 'required',
       end: 'required',
-      status: 'required|in:APROVADO,ATIVO,EM PROGRESSO,COMPLETO,CANCELADO,ATRASADO',
+      status: 'required|in:EM ABERTO,EM DESENVOLVIMENTO,EM ANÁLISE,EM TESTE,RESOLVIDO',
       priority: 'required|in:BAIXA,MÉDIA,ALTA'
     }
   }
@@ -21,7 +21,7 @@ class StoreTask {
       'start.required': 'A DATA INICIAL é um campo obrigatório.',
       'end.required': 'O DATA FINAL é um campo obrigatório.',
       'status.required': 'O STATUS é um campo obrigatório.',
-      'status.in': 'O campo STATUS só aceita os valores: APROVADO,ATIVO,EM PROGRESSO,COMPLETO,CANCELADO ou ATRASADO',
+      'status.in': 'O campo STATUS só aceita os valores: EM ABERTO,EM DESENVOLVIMENTO,EM ANÁLISE,EM TESTE,RESOLVIDO',
       'priority.required': 'A PRIORIDADE é um campo obrigatório.',
       'priority.in': 'O campo PRIORIDADE só aceita os valores: BAIXA,MÉDIA ou ALTA',
 

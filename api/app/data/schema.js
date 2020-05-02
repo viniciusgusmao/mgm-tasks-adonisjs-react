@@ -26,6 +26,7 @@ const typeDefs = `
     cpf: String
     cnpj: String
     company: Company
+    projects: [Project]
   }
   type Project {
     id: Int!

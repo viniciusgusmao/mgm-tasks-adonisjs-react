@@ -21,12 +21,11 @@ import BaseForm from 'pages/BaseForm';
 import { getAvailableProjectStatus, joinDateTimeAndPrepareToDB } from 'utils'
 
 const Form = ({currentPath, customersFill}) => {
-  const [errorApiRequest, setErrorApiRequest] = useState([])
   const history = useHistory();
   
   return (
     <BaseForm>
-      {(setLoading, execToast) => (
+      {(store, update, errorApiRequest) => (
         <Formik
             initialValues={{
               name: '',
@@ -41,26 +40,8 @@ const Form = ({currentPath, customersFill}) => {
             }}
             validationSchema={validation}
             onSubmit={(values) => { 
-              const dataMod = joinDateTimeAndPrepareToDB(values);
-              setLoading(true)
-              setErrorApiRequest([])
-              store(currentPath,dataMod)
-                .then((response) => {
-                  const { data } = response;
-                  if (data.hasOwnProperty('length')){
-                    let errors = data.map((item,idx) => item[idx] = item.message);
-                    setErrorApiRequest(errors);
-                  } else
-                    execToast(true,"Cadastro realizado com sucesso",'success',currentPath)
-                  
-                  setLoading(false)
-                })
-                .catch((error) => {
-                  console.log(error)
-                  execToast(true,"Sua sessão expirou",'fail','/login')
-                  setLoading(false)
-                })
-            }}
+              store(currentPath,joinDateTimeAndPrepareToDB(values))
+            }}              
           >
             {({
               values,

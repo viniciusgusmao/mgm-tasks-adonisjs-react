@@ -1,8 +1,20 @@
 import React from 'react';
 
-const Create = () => {
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
+import TitlePage from 'components/TitlePage';
+import Form from './form';
+
+const Create = ({currentPath, projectsFill}) => {
   return (
-    <h1>Create</h1>
+    <Container>
+      <Row>
+        <Col lg={12}><TitlePage title="Nova tarefa" /></Col>
+      </Row>
+      <Form currentPath={currentPath} projectsFill={projectsFill} />
+    </Container>  
   );
 }
 

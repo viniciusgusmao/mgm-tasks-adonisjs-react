@@ -15,37 +15,23 @@ import Col from 'react-bootstrap/Col'
 import Button from 'components/Button'
 import BackButtonForm from 'components/BackButtonForm'
 
-import { update } from 'services/crud';
 import validation from 'validations/projects';
 import BaseForm from 'pages/BaseForm';
-import { getAvailableProjectStatus, joinDateTimeAndPrepareToDB, prepapreInitialValuesWithSameKeysOfTable } from 'utils'
+import { 
+  getAvailableTaskPriority, 
+  getAvailableTaskStatus, 
+  joinDateTimeAndPrepareToDB,
+  prepareArrayProjectsToFillInSelect,
+  prepapreInitialValuesWithSameKeysOfTable
+} from 'utils'
 
-const Form = ({currentPath, customersFill, initialValues: initialValues_, id}) => {
+const Form = ({currentPath, projectsFill: projectsFill_, initialValues: initialValues_, id}) => {
   const history = useHistory();
 
-  const data = initialValues_.fetchProject;
-  const initialValues = prepapreInitialValuesWithSameKeysOfTable(data,"customer")
-
-  console.log(initialValues.status);
-
-  for(let key in data){
-    if (key !== "customer"){
-      if(key === "start"){
-        let d = data[key].split(' ');
-        initialValues['start_date'] = d[0];
-        initialValues['start_time'] = d[1];
-      } else if(key === "end"){
-        let d = data[key].split(' ');
-        initialValues['end_date'] = d[0];
-        initialValues['end_time'] = d[1];
-      } else
-        initialValues[key] = data[key];
-    }
-    else
-      initialValues['customer_id'] = data[key]['id'];
-  }
-  delete initialValues['__typename'];
-
+  const data = initialValues_.fetchTask;
+  const initialValues = prepapreInitialValuesWithSameKeysOfTable(data,"project")
+  const projectsFill = prepareArrayProjectsToFillInSelect(projectsFill_)
+  console.log(initialValues);
   return (
     <BaseForm>
       {(store, update, errorApiRequest) => (
@@ -86,15 +72,16 @@ const Form = ({currentPath, customersFill, initialValues: initialValues_, id}) =
                     />
                   </Col>
                   <Col lg={3}>
-                    <TextInput 
-                      label="Valor*" 
-                      value={values.cost} 
-                      handleChange={handleChange('cost')}
-                      onSetFieldTouched={() => setFieldTouched('cost')}
-                    />
-                    {touched.cost && errors.cost && (
-                      <ErrorMsg description={errors.cost} />
-                    )}
+                    <SelectInput 
+                        label="Prioridade*"
+                        handleChange={handleChange('priority')}
+                        onSetFieldTouched={() => setFieldTouched('priority')}
+                        value={values.priority}
+                        fill={getAvailableTaskPriority()}
+                      />
+                      {touched.status && errors.status && (
+                        <ErrorMsg description={errors.status} />
+                      )}
                   </Col>
                 </Row>
                 <Row>
@@ -146,14 +133,14 @@ const Form = ({currentPath, customersFill, initialValues: initialValues_, id}) =
                 <Row>
                   <Col lg={6}>
                     <SelectInput 
-                      label="Cliente*"
-                      handleChange={handleChange('customer_id')}
-                      onSetFieldTouched={() => setFieldTouched('customer_id')}
-                      value={values.customer_id}
-                      fill={customersFill?.fetchCompany?.customers}
+                      label="Projeto*"
+                      handleChange={handleChange('project_id')}
+                      onSetFieldTouched={() => setFieldTouched('project_id')}
+                      value={values.project_id}
+                      fill={projectsFill}
                     />
-                    {touched.customer_id && errors.customer_id && (
-                      <ErrorMsg description={errors.customer_id} />
+                    {touched.project_id && errors.project_id && (
+                      <ErrorMsg description={errors.project_id} />
                     )}
                   </Col>
                   <Col lg={6}>
@@ -162,7 +149,7 @@ const Form = ({currentPath, customersFill, initialValues: initialValues_, id}) =
                       handleChange={handleChange('status')}
                       onSetFieldTouched={() => setFieldTouched('status')}
                       value={values.status}
-                      fill={getAvailableProjectStatus()}
+                      fill={getAvailableTaskStatus()}
                     />
                     {touched.status && errors.status && (
                       <ErrorMsg description={errors.status} />

@@ -24,7 +24,7 @@ const Customers = () => {
         <Route path={`${path}/create`}>
           <Create currentPath={path} />
         </Route>
-        <Route path={`${path}/edit/:id`}>
+        <Route path={`${path}/:id/edit`}>
           <Edit currentPath={path} />
         </Route>
       </Switch>

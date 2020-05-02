@@ -12,19 +12,17 @@ import Col from 'react-bootstrap/Col'
 import Button from 'components/Button'
 import BackButtonForm from 'components/BackButtonForm'
 
-import { store } from 'services/crud';
 import validation from 'validations/customers';
 import BaseForm from 'pages/BaseForm';
 import { getIdCompany } from 'utils'
 
 const Form = ({currentPath}) => {
-  const [error, setError] = useState('')
   const history = useHistory();
   const company_id = getIdCompany();
 
   return (
     <BaseForm>
-      {(setLoading, execToast) => (
+      {(store, update, errorApiRequest) => (
         <Formik
             initialValues={{
               name: '',
@@ -41,24 +39,8 @@ const Form = ({currentPath}) => {
               cnpj: '',
             }}
             validationSchema={validation}
-            onSubmit={(values) => {            
-              setLoading(true)
-              setError('');
+            onSubmit={(values) => { 
               store(currentPath,values)
-                .then((response) => {
-                  const { data } = response;
-                  if (data.hasOwnProperty('length')){
-                    let errors = data.map((item,idx) => item[idx] = item.message).join('<br>');
-                    setError(errors);
-                  } else
-                    execToast(true,"Cadastro realizado com sucesso",'success',currentPath)
-                  
-                  setLoading(false)
-                })
-                .catch((error) => {
-                  execToast(true,"Sua sessão expirou",'fail','/login')
-                  setLoading(false)
-                })
             }}
           >
             {({
@@ -200,7 +182,7 @@ const Form = ({currentPath}) => {
                   </Col>
                 </Row>
                 <Row>
-                    <Col lg={12}>{error !== "" && <ErrorMsg description={error} />}</Col>
+                    <Col lg={12}>{errorApiRequest.length > 0 && <ErrorMsg description={errorApiRequest} />}</Col>
                 </Row>
                 <Row>
                   <Col lg={8}></Col>

@@ -12,47 +12,23 @@ import Col from 'react-bootstrap/Col'
 import Button from 'components/Button'
 import BackButtonForm from 'components/BackButtonForm'
 
-import { update } from 'services/crud';
 import validation from 'validations/customers';
 import BaseForm from 'pages/BaseForm';
+import { prepapreInitialValuesWithSameKeysOfTable } from 'utils';
 
 const Form = ({currentPath, initialValues: initialValues_, id}) => {
-  const [error, setError] = useState('')
   const history = useHistory();
-
-  const initialValues = {}
   const data = initialValues_.fetchCustomer;
-  for(let key in data){
-    if (key != "company")
-      initialValues[key] = data[key];
-    else
-      initialValues['company_id'] = data[key]['id'];
-  }
-
+  const initialValues = prepapreInitialValuesWithSameKeysOfTable(data,"company")
+  
   return (
     <BaseForm>
-      {(setLoading, execToast) => (
+      {(store, update, errorApiRequest) => (
         <Formik
             initialValues={initialValues}
             validationSchema={validation}
-            onSubmit={(values) => {            
-              setLoading(true)
-              setError('');
+            onSubmit={(values) => {
               update(currentPath,id,values)
-                .then((response) => {
-                  const { data } = response;
-                  if (data.hasOwnProperty('length')){
-                    let errors = data.map((item,idx) => item[idx] = item.message).join('<br>');
-                    setError(errors);
-                  } else
-                    execToast(true,"Atualização realizada com sucesso",'success',currentPath)
-                  
-                  setLoading(false)
-                })
-                .catch((error) => {
-                  execToast(true,"Sua sessão expirou",'fail','/login')
-                  setLoading(false)
-                })
             }}
           >
             {({
@@ -194,7 +170,7 @@ const Form = ({currentPath, initialValues: initialValues_, id}) => {
                   </Col>
                 </Row>
                 <Row>
-                    <Col lg={12}>{error !== "" && <ErrorMsg description={error} />}</Col>
+                    <Col lg={12}>{errorApiRequest.length > 0 && <ErrorMsg description={errorApiRequest} />}</Col>
                 </Row>
                 <Row>
                   <Col lg={8}></Col>

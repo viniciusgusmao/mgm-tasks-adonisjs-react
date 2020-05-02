@@ -12,7 +12,7 @@ const resolvers = {
       const elements = await Company
         .query()
         .where('id',id)
-        .with('customers')
+        .with('customers.projects')
         .fetch()
       return elements.toJSON()[0];
     },
@@ -72,6 +72,7 @@ const resolvers = {
         .query()
         .where('id',id)
         .with('employees')
+        .with('project')
         .fetch();
       return element.toJSON()[0];
     },

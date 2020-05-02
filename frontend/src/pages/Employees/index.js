@@ -9,28 +9,27 @@ import {
 } from "react-router-dom";
 
 import Layout from 'pages';
-import Index from './Index';
-import Create from './Create';
-import Edit from './Edit';
+import Index from 'pages/Employees/Index';
+import Create from 'pages/Employees/Create';
+import Edit from 'pages/Employees/Edit';
 
-const Clientes = () => {
-  let { path, url } = useRouteMatch();
-
+const Employees = () => {
+  let { path } = useRouteMatch();
   return (
     <Layout>
       <Switch>
         <Route exact path={path}>
-          <Index />
+          <Index currentPath={path} />
         </Route>
         <Route path={`${path}/create`}>
-          <Create />
+          <Create currentPath={path} />
         </Route>
-        <Route path={`${path}/edit`}>
-          <Edit />
+        <Route path={`${path}/:id/edit`}>
+          <Edit currentPath={path} />
         </Route>
       </Switch>
     </Layout>
   );
 }
 
-export default Clientes;
+export default Employees;
