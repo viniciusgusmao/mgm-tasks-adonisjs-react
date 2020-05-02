@@ -12,7 +12,7 @@ import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import Loading from 'components/Loading';
 
-const Edit = ({currentPath, projectsFill}) => {
+const Edit = ({currentPath, dataFillSelect}) => {
   let { id } = useParams();
   
   const FETCH_TASK = gql`
@@ -28,6 +28,9 @@ const Edit = ({currentPath, projectsFill}) => {
         project{
           id
         }
+        employees{
+          id      
+        }
       }
     }
 `;
@@ -40,7 +43,7 @@ const Edit = ({currentPath, projectsFill}) => {
       <Row>
         <Col lg={12}><TitlePage title={`Atualizar tarefa - ${data.fetchTask?.name.toUpperCase()}`} /></Col>
       </Row>
-      <Form currentPath={currentPath} projectsFill={projectsFill} id={id} initialValues={data} />
+      <Form currentPath={currentPath} dataFillSelect={dataFillSelect} id={id} initialValues={data} />
     </Container>  
   );
 }

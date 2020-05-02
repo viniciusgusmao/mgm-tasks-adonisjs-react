@@ -1,5 +1,5 @@
-import React,{ useState } from 'react';
-import { Formik } from 'formik';
+import React from 'react';
+import { Formik, Field } from 'formik';
 
 import { useHistory } from "react-router-dom";
 
@@ -15,23 +15,36 @@ import Col from 'react-bootstrap/Col'
 import Button from 'components/Button'
 import BackButtonForm from 'components/BackButtonForm'
 
-import validation from 'validations/projects';
+import validation from 'validations/tasks';
 import BaseForm from 'pages/BaseForm';
 import { 
   getAvailableTaskPriority, 
   getAvailableTaskStatus, 
   joinDateTimeAndPrepareToDB,
   prepareArrayProjectsToFillInSelect,
-  prepapreInitialValuesWithSameKeysOfTable
+  prepapreInitialValuesWithSameKeysOfTable,
+  prepareArrayEmployeesToFillInSelect
 } from 'utils'
 
-const Form = ({currentPath, projectsFill: projectsFill_, initialValues: initialValues_, id}) => {
+const Form = ({currentPath, dataFillSelect, initialValues: initialValues_ = [], id}) => {
   const history = useHistory();
 
+  
   const data = initialValues_.fetchTask;
   const initialValues = prepapreInitialValuesWithSameKeysOfTable(data,"project")
-  const projectsFill = prepareArrayProjectsToFillInSelect(projectsFill_)
-  console.log(initialValues);
+  
+  let projectsFill, employeesFill;
+  if (dataFillSelect){
+    projectsFill = prepareArrayProjectsToFillInSelect(dataFillSelect)
+    employeesFill = prepareArrayEmployeesToFillInSelect(dataFillSelect)
+  }
+  
+  const employeesMod = [];
+  initialValues['employees'].map(item => {
+    employeesMod.push(item.id)
+  })
+  initialValues['employees'] = employeesMod;
+
   return (
     <BaseForm>
       {(store, update, errorApiRequest) => (
@@ -49,6 +62,7 @@ const Form = ({currentPath, projectsFill: projectsFill_, initialValues: initialV
               touched,
               setFieldTouched,
               handleSubmit,
+              setFieldValue
             }) => (
               <div className="container-form">
                 <Row>
@@ -154,6 +168,31 @@ const Form = ({currentPath, projectsFill: projectsFill_, initialValues: initialV
                     {touched.status && errors.status && (
                       <ErrorMsg description={errors.status} />
                     )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12}>
+                    <label className="label-input">Escolha os funcionários para esta tarefa</label>
+                    <Field
+                      component="select"
+                      name="employees"
+                      className="textarea-style"
+                      onChange={evt =>
+                        setFieldValue(
+                          "employees",
+                          [].slice
+                            .call(evt.target.selectedOptions)
+                            .map(option => option.value)
+                        )
+                      }
+                      multiple={true}
+                    >
+                      {employeesFill?.map(item => (
+                        <option key={item.id} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </Field>
                   </Col>
                 </Row>
                 <Row>

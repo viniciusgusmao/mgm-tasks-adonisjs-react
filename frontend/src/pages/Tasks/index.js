@@ -16,7 +16,7 @@ import { getIdCompany } from 'utils';
 
 const Tasks = () => {
   const company_id = getIdCompany();
-  const FETCH_COMPANY = gql`
+  const QUERY = gql`
     {
       fetchCompany(id: ${company_id}) {
         customers{
@@ -26,10 +26,13 @@ const Tasks = () => {
          }
         }
       }
+      allEmployees{
+        id
+        name
+      }
     }
   `;
-  const { loading, error, data } = useQuery(FETCH_COMPANY);
-
+  const { loading, error, data } = useQuery(QUERY);
   let { path } = useRouteMatch();
   return (
     <Layout>
@@ -38,10 +41,10 @@ const Tasks = () => {
           <Index currentPath={path} />
         </Route>
         <Route path={`${path}/create`}>
-          <Create currentPath={path} projectsFill={data} />
+          <Create currentPath={path} dataFillSelect={data} />
         </Route>
         <Route path={`${path}/:id/edit`}>
-          <Edit currentPath={path} projectsFill={data} />
+          <Edit currentPath={path} dataFillSelect={data} />
         </Route>
       </Switch>
     </Layout>

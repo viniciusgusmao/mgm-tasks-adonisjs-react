@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik } from 'formik';
+import { Formik, Field } from 'formik';
 
 import { useHistory } from "react-router-dom";
 
@@ -21,14 +21,18 @@ import {
   getAvailableTaskPriority, 
   getAvailableTaskStatus, 
   joinDateTimeAndPrepareToDB,
-  prepareArrayProjectsToFillInSelect 
+  prepareArrayProjectsToFillInSelect,
+  prepareArrayEmployeesToFillInSelect
 } from 'utils'
 
-const Form = ({currentPath, projectsFill: projectsFill_}) => {
+const Form = ({currentPath, dataFillSelect}) => {
   const history = useHistory();
-
-  const projectsFill = prepareArrayProjectsToFillInSelect(projectsFill_)
-    
+  
+  let projectsFill, employeesFill;
+  if (dataFillSelect){
+    projectsFill = prepareArrayProjectsToFillInSelect(dataFillSelect)
+    employeesFill = prepareArrayEmployeesToFillInSelect(dataFillSelect)
+  }
   return (
     <BaseForm>
       {(store, update, errorApiRequest) => (
@@ -46,6 +50,7 @@ const Form = ({currentPath, projectsFill: projectsFill_}) => {
             }}
             validationSchema={validation}
             onSubmit={(values) => { 
+              console.log(values)
               store(currentPath,joinDateTimeAndPrepareToDB(values))
             }}              
           >
@@ -56,6 +61,7 @@ const Form = ({currentPath, projectsFill: projectsFill_}) => {
               touched,
               setFieldTouched,
               handleSubmit,
+              setFieldValue
             }) => (
               <div className="container-form">
                 <Row>
@@ -161,6 +167,31 @@ const Form = ({currentPath, projectsFill: projectsFill_}) => {
                     {touched.status && errors.status && (
                       <ErrorMsg description={errors.status} />
                     )}
+                  </Col>
+                </Row>
+                <Row>
+                  <Col lg={12}>
+                    <label className="label-input">Escolha os funcionários para esta tarefa</label>
+                    <Field
+                      component="select"
+                      name="employees"
+                      className="textarea-style"
+                      onChange={evt =>
+                        setFieldValue(
+                          "employees",
+                          [].slice
+                            .call(evt.target.selectedOptions)
+                            .map(option => option.value)
+                        )
+                      }
+                      multiple={true}
+                    >
+                      {employeesFill?.map(item => (
+                        <option key={item.key} value={item.id}>
+                          {item.name}
+                        </option>
+                      ))}
+                    </Field>
                   </Col>
                 </Row>
                 <Row>

@@ -84,9 +84,9 @@ export const getAvailableTaskPriority = () => {
   ];
 }
 
-export const prepareArrayProjectsToFillInSelect = (projectsFill_) => {
+export const prepareArrayProjectsToFillInSelect = (data) => {
   const projectsFill = []
-  projectsFill_.fetchCompany.customers.forEach(item => {
+  data.fetchCompany.customers.forEach(item => {
     if (item.projects.length > 0){
       item.projects.forEach(project => {
         projectsFill.push({
@@ -97,6 +97,17 @@ export const prepareArrayProjectsToFillInSelect = (projectsFill_) => {
     }
   })
   return projectsFill;
+}
+
+export const prepareArrayEmployeesToFillInSelect = (data) => {
+  const employeesFill = []
+  data.allEmployees.forEach(item => {
+    employeesFill.push({
+      id: item.id,
+      name: item.name
+    })
+  })
+  return employeesFill;
 }
 
 export const prepapreInitialValuesWithSameKeysOfTable = (data,model) => {
@@ -129,5 +140,6 @@ export const joinDateTimeAndPrepareToDB = (values) => {
   delete dataMod['start_time'];
   delete dataMod['end_date'];
   delete dataMod['end_time'];
+  delete dataMod['__typename'];
   return dataMod;
 }
