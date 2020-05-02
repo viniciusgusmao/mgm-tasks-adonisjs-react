@@ -40,7 +40,9 @@ const Index = ({ currentPath }) => {
     { dataField: "priority", text: "Prioridade" },
   ];
 
-  const { loading, error, data } = useQuery(DATA);
+  const { loading, error, data } = useQuery(DATA, {
+    pollInterval: 500,
+  });
 
   if (loading) return <Loading />;
 

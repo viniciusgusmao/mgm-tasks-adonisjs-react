@@ -37,7 +37,9 @@ const Index = ({ currentPath }) => {
     { dataField: "state", text: "Estado" },
   ];
 
-  const { loading, error, data } = useQuery(DATA);
+  const { loading, error, data } = useQuery(DATA, {
+    pollInterval: 500,
+  });
 
   if (loading) return <Loading />;
 

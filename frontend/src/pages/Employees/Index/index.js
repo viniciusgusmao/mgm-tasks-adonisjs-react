@@ -34,7 +34,9 @@ const Index = ({ currentPath }) => {
     { dataField: "email", text: "E-mail" },
   ];
 
-  const { loading, error, data } = useQuery(DATA);
+  const { loading, error, data } = useQuery(DATA, {
+    pollInterval: 500,
+  });
 
   if (loading) return <Loading />;
 
