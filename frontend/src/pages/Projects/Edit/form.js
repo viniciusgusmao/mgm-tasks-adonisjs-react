@@ -57,7 +57,7 @@ const Form = ({
 
   return (
     <BaseForm>
-      {(store, update, errorApiRequest) => (
+      {(store, update, destroy, errorApiRequest) => (
         <Formik
           initialValues={initialValues}
           validationSchema={validation}

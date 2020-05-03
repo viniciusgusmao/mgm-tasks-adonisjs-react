@@ -25,7 +25,7 @@ const Form = ({ currentPath, initialValues: initialValues_, id }) => {
   );
   return (
     <BaseForm>
-      {(store, update, errorApiRequest) => (
+      {(store, update, destroy, errorApiRequest) => (
         <Formik
           initialValues={initialValues}
           validationSchema={validation}

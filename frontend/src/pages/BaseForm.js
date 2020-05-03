@@ -73,11 +73,21 @@ const BaseForm = ({ children }) => {
       });
   };
 
-  const deleteAction = (currentPath, id, values) => {
+  const deleteAction = (currentPath, id) => {
     setLoading(true);
-    destroy(currentPath, id, values)
-      .then((response) => {})
-      .catch((error) => {});
+    destroy(currentPath, id)
+      .then((response) => {
+        const { data } = response;
+        if (data.success)
+          execToast(true, "Item excluído com sucesso", "success", currentPath);
+        else execToast(true, data.message, "fail", currentPath);
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        execToast(true, "Sua sessão expirou", "fail", "/login");
+        setLoading(false);
+      });
   };
 
   return (
@@ -92,6 +102,7 @@ const BaseForm = ({ children }) => {
       {children(
         (currentPath, values) => storeAction(currentPath, values),
         (currentPath, id, values) => updateAction(currentPath, id, values),
+        (currentPath, id) => deleteAction(currentPath, id),
         errorApiRequest
       )}
     </>

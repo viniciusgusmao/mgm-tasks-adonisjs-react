@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col";
 
 import Button from "components/Button";
 import BackButtonForm from "components/BackButtonForm";
+import DeleteButton from "components/DeleteButton";
 
 import validation from "validations/customers";
 import BaseForm from "pages/BaseForm";
@@ -26,7 +27,7 @@ const Form = ({ currentPath, initialValues: initialValues_, id }) => {
 
   return (
     <BaseForm>
-      {(store, update, errorApiRequest) => (
+      {(store, update, destroy, errorApiRequest) => (
         <Formik
           initialValues={initialValues}
           validationSchema={validation}
@@ -180,7 +181,13 @@ const Form = ({ currentPath, initialValues: initialValues_, id }) => {
                 </Col>
               </Row>
               <Row>
-                <Col lg={8}></Col>
+                <Col lg={2}>
+                  <DeleteButton
+                    title="Excluir"
+                    handleClick={() => destroy(currentPath, id)}
+                  />
+                </Col>
+                <Col lg={6}></Col>
                 <Col lg={2}>
                   <BackButtonForm
                     title="Voltar"

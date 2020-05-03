@@ -9,6 +9,6 @@ export const update = (path, id, data) => {
   return api.put(`${urls.api + "" + path + "/" + id}`, data);
 };
 
-export const destroy = (path, id, data) => {
-  return api.delete(`${urls.api + "" + path + "/" + id}`, data);
+export const destroy = (path, id) => {
+  return api.delete(`${urls.api + "" + path + "/" + id}`);
 };
