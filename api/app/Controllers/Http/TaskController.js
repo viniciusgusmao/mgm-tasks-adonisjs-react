@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -8,69 +8,62 @@
 const currentController = "TaskController";
 const currentModel = "Task";
 const indexObjParams = {
-  relationDependency: 'project',
-}
+  relationDependency: "project",
+};
 const destroyObjParams = {
-  relationDependency: 'employees',
-  messageFail: 'Existem funcionários ligados à essa tarefa.'
-}
+  relationDependency: "employees",
+  messageFail: "Existem funcionários ligados à essa tarefa.",
+};
 /* --------------------------------------------- */
 
 const Element = use(`App/Models/${currentModel}`);
 let classes = {};
 classes[currentController] = class {
-
-
-  async store ({ request, response }) {
-    const body = request.all()
+  async store({ request, response }) {
+    const body = request.all();
     const employees = body.employees;
     delete body.employees;
-    const element = await Element.create(body)
-    await this.employee_tasks(element.id,employees);
-    response.send(element)
+    const element = await Element.create(body);
+    await this.attach_employee_tasks(element.id, employees);
+    response.send(element);
   }
 
-  async employee_tasks(id,attach){
-    const element = await Element.find(id)
-    await element
-      .employees()
-      .attach(attach)
+  async attach_employee_tasks(id, attach) {
+    const element = await Element.find(id);
+    await element.employees().attach(attach);
   }
 
-  async update ({ params, request, response }) {
-    const { id } = params
-    const body = request.all()
-    const element = await Element.find(id)
+  async detach_employee_tasks(id) {
+    const element = await Element.find(id);
+    await element.employees().detach();
+  }
+
+  async update({ params, request, response }) {
+    const { id } = params;
+    const body = request.all();
+    const element = await Element.find(id);
 
     const employees = body.employees;
     delete body.employees;
 
-    Object.keys(body).map(item => {
-      element[item] = body[item]
-    })
-    await element.save()
+    Object.keys(body).map((item) => {
+      element[item] = body[item];
+    });
+    await element.save();
 
-    await element.employees().detach()
-    await this.employee_tasks(element.id,employees);
+    await this.detach_employee_tasks(id);
+    await this.attach_employee_tasks(element.id, employees);
 
-    response.send(element)
+    response.send(element);
   }
 
-  async destroy ({ params, request, response }) {
-    const { id } = params
-    const { rows } = await Element
-      .query()
-      .where('id',id)
-      .has(destroyObjParams.relationDependency)
-      .fetch()
-
-    if (rows.length > 0)
-      response.send({ "success" : false, "message": destroyObjParams.messageFail })
-    else {
-      await element.delete();
-      response.send({ "success" : true })
-    }
+  async destroy({ params, request, response }) {
+    const { id } = params;
+    const element = await Element.find(id);
+    await this.detach_employee_tasks(id);
+    await element.delete();
+    response.send({ success: true });
   }
-}
+};
 
-module.exports = classes[currentController]
+module.exports = classes[currentController];

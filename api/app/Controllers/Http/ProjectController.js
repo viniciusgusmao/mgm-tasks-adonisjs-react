@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -8,54 +8,54 @@
 const currentController = "ProjectController";
 const currentModel = "Project";
 const indexObjParams = {
-  relationDependency: 'customer',
-}
+  relationDependency: "customer",
+};
 const destroyObjParams = {
-  relationDependency: 'tasks',
-  messageFail: 'Existem tarefas ligados à esse projeto.'
-}
+  relationDependency: "tasks",
+  messageFail: "Existem tarefas ligadas à esse projeto.",
+};
 /* --------------------------------------------- */
 
 const Element = use(`App/Models/${currentModel}`);
 let classes = {};
 classes[currentController] = class {
-
-  async store ({ request, response }) {
-    const body = request.all()
+  async store({ request, response }) {
+    const body = request.all();
     try {
-      const element = await Element.create(body)
+      const element = await Element.create(body);
       response.send(element);
-    } catch(e){
+    } catch (e) {
       response.send(String(e));
     }
   }
 
-  async update ({ params, request, response }) {
-    const { id } = params
-    const body = request.all()
-    const element = await Element.find(id)
-    Object.keys(body).map(item => {
-      element[item] = body[item]
-    })
-    await element.save()
-    response.send(element)
+  async update({ params, request, response }) {
+    const { id } = params;
+    const body = request.all();
+    const element = await Element.find(id);
+    Object.keys(body).map((item) => {
+      element[item] = body[item];
+    });
+    await element.save();
+    response.send(element);
   }
 
-  async destroy ({ params, request, response }) {
-    const { id } = params
-    const { rows } = await Element
-      .query()
-      .where('id',id)
+  async destroy({ params, request, response }) {
+    const { id } = params;
+    const { rows } = await Element.query()
+      .where("id", id)
       .has(destroyObjParams.relationDependency)
-      .fetch()
+      .fetch();
 
     if (rows.length > 0)
-      response.send({ "success" : false, "message": destroyObjParams.messageFail })
+      response.send({ success: false, message: destroyObjParams.messageFail });
     else {
+      const element = await Element.find(id);
+      console.log(element);
       await element.delete();
-      response.send({ "success" : true })
+      response.send({ success: true });
     }
   }
-}
+};
 
-module.exports = classes[currentController]
+module.exports = classes[currentController];

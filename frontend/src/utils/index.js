@@ -116,7 +116,7 @@ export const prepareArrayEmployeesToFillInSelect = (data) => {
 
 export const prepapreInitialValuesWithSameKeysOfTable = (data, model) => {
   let initialValues = {};
-  delete data["__typename"];
+  data && delete data["__typename"];
   for (let key in data) {
     if (key !== model) {
       if (key === "start") {

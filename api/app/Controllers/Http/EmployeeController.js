@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -8,47 +8,46 @@
 const currentController = "EmployeeController";
 const currentModel = "Employee";
 const destroyObjParams = {
-  relationDependency: 'tasks',
-  messageFail: 'Existem tarefas ligados à esse funcionário.'
-}
+  relationDependency: "tasks",
+  messageFail: "Existem tarefas ligados à esse funcionário.",
+};
 /* --------------------------------------------- */
 
 const Element = use(`App/Models/${currentModel}`);
 let classes = {};
 classes[currentController] = class {
-
-  async store ({ request, response }) {
-    const body = request.all()
-    const element = await Element.create(body)
+  async store({ request, response }) {
+    const body = request.all();
+    const element = await Element.create(body);
     response.send(element);
   }
 
-  async update ({ params, request, response }) {
-    const { id } = params
-    const body = request.all()
-    const element = await Element.find(id)
-    Object.keys(body).map(item => {
-      element[item] = body[item]
-    })
-    await element.save()
-    response.send(element)
+  async update({ params, request, response }) {
+    const { id } = params;
+    const body = request.all();
+    const element = await Element.find(id);
+    Object.keys(body).map((item) => {
+      element[item] = body[item];
+    });
+    await element.save();
+    response.send(element);
   }
 
-  async destroy ({ params, request, response }) {
-    const { id } = params
-    const { rows } = await Element
-      .query()
-      .where('id',id)
+  async destroy({ params, request, response }) {
+    const { id } = params;
+    const { rows } = await Element.query()
+      .where("id", id)
       .has(destroyObjParams.relationDependency)
-      .fetch()
+      .fetch();
 
     if (rows.length > 0)
-      response.send({ "success" : false, "message": destroyObjParams.messageFail })
+      response.send({ success: false, message: destroyObjParams.messageFail });
     else {
+      const element = await Element.find(id);
       await element.delete();
-      response.send({ "success" : true })
+      response.send({ success: true });
     }
   }
-}
+};
 
-module.exports = classes[currentController]
+module.exports = classes[currentController];

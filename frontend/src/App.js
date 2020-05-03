@@ -1,8 +1,9 @@
 import React, { useEffect } from "react";
 import "./App.scss";
 import "./assets/normalize.css";
-// import '../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Routes from "./routes";
 
@@ -14,9 +15,12 @@ const App = () => {
     document.title = "Gestor de Projetos";
   }, []);
   return (
-    <ApolloProvider client={client}>
-      <Routes />
-    </ApolloProvider>
+    <>
+      <ToastContainer />
+      <ApolloProvider client={client}>
+        <Routes />
+      </ApolloProvider>
+    </>
   );
 };
 

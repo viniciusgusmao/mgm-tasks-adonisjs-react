@@ -14,6 +14,7 @@ import Col from "react-bootstrap/Col";
 
 import Button from "components/Button";
 import BackButtonForm from "components/BackButtonForm";
+import DeleteButton from "components/DeleteButton";
 
 import validation from "validations/tasks";
 import BaseForm from "pages/BaseForm";
@@ -212,7 +213,13 @@ const Form = ({
                 </Col>
               </Row>
               <Row>
-                <Col lg={8}></Col>
+                <Col lg={2}>
+                  <DeleteButton
+                    title="Remover"
+                    handleClick={() => destroy(currentPath, id)}
+                  />
+                </Col>
+                <Col lg={6}></Col>
                 <Col lg={2}>
                   <BackButtonForm
                     title="Voltar"

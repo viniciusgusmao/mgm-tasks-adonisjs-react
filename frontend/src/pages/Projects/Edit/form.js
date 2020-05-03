@@ -14,8 +14,8 @@ import Col from "react-bootstrap/Col";
 
 import Button from "components/Button";
 import BackButtonForm from "components/BackButtonForm";
+import DeleteButton from "components/DeleteButton";
 
-import { update } from "services/crud";
 import validation from "validations/projects";
 import BaseForm from "pages/BaseForm";
 import {
@@ -37,23 +37,6 @@ const Form = ({
     data,
     "customer"
   );
-
-  console.log(initialValues.status);
-
-  for (let key in data) {
-    if (key !== "customer") {
-      if (key === "start") {
-        let d = data[key].split(" ");
-        initialValues["start_date"] = d[0];
-        initialValues["start_time"] = d[1];
-      } else if (key === "end") {
-        let d = data[key].split(" ");
-        initialValues["end_date"] = d[0];
-        initialValues["end_time"] = d[1];
-      } else initialValues[key] = data[key];
-    } else initialValues["customer_id"] = data[key]["id"];
-  }
-  delete initialValues["__typename"];
 
   return (
     <BaseForm>
@@ -186,7 +169,13 @@ const Form = ({
                 </Col>
               </Row>
               <Row>
-                <Col lg={8}></Col>
+                <Col lg={2}>
+                  <DeleteButton
+                    title="Remover"
+                    handleClick={() => destroy(currentPath, id)}
+                  />
+                </Col>
+                <Col lg={6}></Col>
                 <Col lg={2}>
                   <BackButtonForm
                     title="Voltar"
