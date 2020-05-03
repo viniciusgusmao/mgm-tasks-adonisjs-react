@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import Row from 'react-bootstrap/Row'
-import Container from 'react-bootstrap/Container'
-import BoxItemList from 'pages/Dashboard/Projetos/BoxItemList';
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import BoxItemList from "pages/Dashboard/Projects/BoxItemList";
 
 const BoxItem = () => (
   <Container>

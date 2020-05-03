@@ -1,13 +1,11 @@
-import React from 'react';
+import React from "react";
 
-import TitleDashboard from 'pages/Dashboard/TitleDashboard';
+import TitleDashboard from "pages/Dashboard/TitleDashboard";
 
-const SectionDashboard = ({ title, children }) => (
+const SectionDashboard = ({ title, children, currentPath }) => (
   <>
-    <TitleDashboard title={title} />
-    <div>
-      {children}
-    </div>
+    <TitleDashboard title={title} currentPath={currentPath} />
+    <div>{children}</div>
   </>
 );
 
