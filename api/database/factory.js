@@ -1,4 +1,4 @@
-'use strict'
+"use strict";
 
 /*
 |--------------------------------------------------------------------------
@@ -12,12 +12,30 @@
 */
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
-const Factory = use('Factory')
+const Factory = use("Factory");
 
-Factory.blueprint('App/Models/Company', () => {
+Factory.blueprint("App/Models/Company", () => {
   return {
-    name: "Tecnovix",
-    email: "suporte@tecnovix.com.br",
-    password: "tecnovix@123"
-  }
-})
+    name: "Empresa Teste",
+    email: "empresa1@empresa.com.br",
+    password: "empresa@123",
+  };
+});
+
+Factory.blueprint("App/Models/Customer", (faker) => {
+  return {
+    name: faker.company(),
+    avatar: faker.avatar({ protocol: "https" }),
+    email: faker.email(),
+    cellphone: faker.phone(),
+    street: faker.address(),
+    number: faker.integer({ min: 300, max: 999 }),
+    district: faker.province(),
+    city: faker.city(),
+    state: faker.state(),
+    cep: faker.zip(),
+    cpf: faker.cpf(),
+    cnpj: null,
+    company_id: 1,
+  };
+});

@@ -22,6 +22,7 @@ const DataTable = ({ currentPath, columns, data }) => {
       rowEvents={rowEvents}
       columns={columns}
       pagination={paginationFactory()}
+      noDataIndication={() => "Nenhum registro encontrado."}
     />
   );
 };
