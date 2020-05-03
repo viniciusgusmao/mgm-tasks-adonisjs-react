@@ -1,21 +1,16 @@
 "use strict";
 
-/*
-|--------------------------------------------------------------------------
-| CustomerSeeder
-|--------------------------------------------------------------------------
-|
-| Make use of the Factory instance to seed database with dummy data or
-| make use of Lucid models directly.
-|
-*/
+const Company = use("App/Models/Company");
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use("Factory");
 
 class CustomerSeeder {
   async run() {
-    await Factory.model("App/Models/Customer").createMany(10);
+    const company = await Company.findBy("email", "empresa1@empresa.com.br");
+    await Factory.model("App/Models/Customer").createMany(10, {
+      company_id: company.id,
+    });
   }
 }
 
