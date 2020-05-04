@@ -20,7 +20,7 @@ const Dashboard = () => {
       allCustomers {
         id
         name
-        email
+        cellphone
         avatar
       }
       allProjects {
@@ -53,11 +53,11 @@ const Dashboard = () => {
             <Projects data={data.allProjects} />
           </Col>
         </Row>
-        <Row>
+        <Row style={{ marginTop: 30 }}>
           <Col lg={7}>
             <Tasks data={data.allTasks} />
           </Col>
-          <Col lg={5}>{/* <img src={} alt="Imagem demo projeto" /> */}</Col>
+          <Col lg={5}><img className="img_pessoas" src={require('../../assets/images/pessoas.jpg')} alt="Imagem demo projeto" /></Col>
         </Row>
       </Container>
     </Layout>

@@ -1,20 +1,20 @@
 version: '3.7'
 services: 
-  db_projeto_tv:
+  db_project_mgm:
     image: mysql:5.7
-    container_name: db_projeto_tv
+    container_name: db_project_mgm
     volumes: 
       - "./mysql/data:/var/lib/mysql"
     ports: 
       - "3306:3306"
     environment: 
       - MYSQL_ROOT_PASSWORD=aMsEiozs
-      - MYSQL_DATABASE=projeto_tv
-  phpmyadmin_projeto_tv:
+      - MYSQL_DATABASE=db_project_mgm
+  phpmyadmin_db_project_mgm:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin_projeto_tv
+    container_name: phpmyadmin_db_project_mgm
     depends_on:
-      - db_projeto_tv
+      - db_project_mgm
     ports:
       - 8001:80
     environment:

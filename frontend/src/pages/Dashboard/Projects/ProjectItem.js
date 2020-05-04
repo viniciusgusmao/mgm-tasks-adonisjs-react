@@ -2,12 +2,12 @@ import React from 'react';
 import Col from 'react-bootstrap/Col'
 import { MdToll } from 'react-icons/md';
 
-const BoxItem = ({ color, label, amount }) => (
-  <Col className={`${color}-background`}>
+const BoxItem = (props) => (
+  <Col className={`${props.color}-background`}>
     <div>
       <MdToll size={36} />
-      <p>{label}</p>
-      <span>{amount} itens</span>
+      <p>{props.name}</p>
+      <span>{props.amount} itens</span>
     </div>
   </Col>
 );

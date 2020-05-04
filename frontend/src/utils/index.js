@@ -14,7 +14,43 @@ export const getToken = () => {
 };
 
 export const getUserLogged = () => {
-  return JSON.parse(localStorage.getItem("@user_gp"));
+  const user = localStorage.getItem("@user_gp");
+  return JSON.parse(user);
+};
+
+export const getAvailableDashboardProjectsStatusWithColor = () => {
+  return [
+    {
+      name: "APROVADO",
+      color: "brown",
+      amount: 0
+    },
+    {
+      name: "ATIVO",
+      color: "cadetblue",
+      amount: 0
+    },
+    {
+      name: "EM PROGRESSO",
+      color: "chocolate",
+      amount: 0
+    },
+    {
+      name: "ATRASADO",
+      color: "darkorchid",
+      amount: 0
+    },
+    {
+      name: "CANCELADO",
+      color: "darkslateblue",
+      amount: 0
+    },
+    {
+      name: "COMPLETO",
+      color: "firebrick",
+      amount: 0
+    },
+  ];
 };
 
 export const getAvailableProjectStatus = () => {

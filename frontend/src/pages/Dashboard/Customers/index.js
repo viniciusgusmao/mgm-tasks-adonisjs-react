@@ -2,15 +2,15 @@ import React from "react";
 import "./index.scss";
 
 import SectionDashboard from "pages/Dashboard/SectionDashboard";
-import ClienteItemList from "pages/Dashboard/Customers/CustomerItemList";
+import CustomerItem from "pages/Dashboard/Customers/CustomerItem";
 
-const Customers = () => (
+const Customers = ({ data }) => (
   <SectionDashboard
     title="Últimos clientes cadastrados"
     currentPath="/customers"
   >
-    <div className="container-dashboard-clientes">
-      <ClienteItemList />
+    <div>
+      {data.slice(0,5).map(item => <CustomerItem key={item.id} {...item} />)}
     </div>
   </SectionDashboard>
 );

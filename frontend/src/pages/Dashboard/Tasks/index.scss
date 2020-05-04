@@ -1,0 +1,36 @@
+@import 'assets/styles/_variables.scss';
+
+.container-task-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  flex: 1;
+  padding: 6px;
+  cursor: pointer;
+  div{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    p{
+      color: #68677E;
+      font-size: 15px;
+      padding: 0;
+      margin: 0;
+      margin-left: 8px;
+    }
+    svg{
+      color: #68677E;
+    }
+  }
+  span:last-child{
+    font-weight: bold;
+    font-size: 12px;
+    color: #68677E;    
+  }
+  &:hover{
+    background-color: $backgroundColorNav;
+  }
+}

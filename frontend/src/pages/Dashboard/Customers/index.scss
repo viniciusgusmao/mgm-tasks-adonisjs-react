@@ -1,0 +1,30 @@
+@import 'assets/styles/_variables.scss';
+
+.container-customer-item{
+  display: flex;
+  flex-direction: row;
+  padding: 6px;
+  cursor: pointer;
+  img{
+    width: 40px;
+    height: 40px;
+  }
+  div{
+    display: flex;
+    margin-left: 10px;
+    flex-direction: column;
+    justify-content: flex-start;
+    span:first-child{
+      font-size: 14px;
+      font-weight: bold;
+      color: $fontColorNavActive;
+    }
+    span:last-child{
+      font-size: 12px;
+      color: $fontColorNav;
+    }
+  }
+  &:hover{
+    background-color: $backgroundColorNav;
+  }
+}
