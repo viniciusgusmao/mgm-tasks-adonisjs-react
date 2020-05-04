@@ -26,7 +26,6 @@ import {
 } from "utils";
 
 const Form = ({ currentPath, dataFillSelect }) => {
-  const history = useHistory();
 
   let projectsFill, employeesFill;
   if (dataFillSelect) {
@@ -92,8 +91,8 @@ const Form = ({ currentPath, dataFillSelect }) => {
                     value={values.priority}
                     fill={getAvailableTaskPriority()}
                   />
-                  {touched.status && errors.status && (
-                    <ErrorMsg description={errors.status} />
+                  {touched.priority && errors.priority && (
+                    <ErrorMsg description={errors.priority} />
                   )}
                 </Col>
               </Row>
@@ -161,7 +160,7 @@ const Form = ({ currentPath, dataFillSelect }) => {
                     label="Status*"
                     handleChange={handleChange("status")}
                     onSetFieldTouched={() => setFieldTouched("status")}
-                    value={values.customer_id}
+                    value={values.status}
                     fill={getAvailableTaskStatus()}
                   />
                   {touched.status && errors.status && (

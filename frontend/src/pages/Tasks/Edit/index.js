@@ -45,7 +45,7 @@ const Edit = ({ currentPath, dataFillSelect }) => {
       <Row>
         <Col lg={12}>
           <TitlePage
-            title={`Atualizar tarefa - ${data.fetchTask?.name.toUpperCase()}`}
+            title={`Atualizar tarefa - ${data?.fetchTask?.name.toUpperCase()}`}
           />
         </Col>
       </Row>

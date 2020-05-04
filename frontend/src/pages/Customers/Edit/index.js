@@ -46,7 +46,7 @@ const Edit = ({ currentPath }) => {
       <Row>
         <Col lg={12}>
           <TitlePage
-            title={`Atualizar cliente - ${data.fetchCustomer?.name.toUpperCase()}`}
+            title={`Atualizar cliente - ${data?.fetchCustomer?.name.toUpperCase()}`}
           />
         </Col>
       </Row>

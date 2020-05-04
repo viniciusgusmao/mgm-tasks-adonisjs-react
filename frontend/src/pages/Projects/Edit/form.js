@@ -33,7 +33,7 @@ const Form = ({
 }) => {
   const history = useHistory();
 
-  const tasks = initialValues_.allProjectsWithSelectedTasks[0].tasks;
+  const tasks = initialValues_?.allProjectsWithSelectedTasks[0]?.tasks;
   
   const data = initialValues_.fetchProject;
   const initialValues = prepapreInitialValuesWithSameKeysOfTable(
@@ -190,6 +190,7 @@ const Form = ({
             </div>
           )}
         </Formik>
+        {tasks && <>
         <h1 className="title-extra-table-form-edit">Tarefas EM ABERTO ou EM ANDAMENTO para este projeto.</h1>
         <DataTable currentPath="/tasks" columns={[
           { dataField: "id", text: "ID" },
@@ -199,6 +200,7 @@ const Form = ({
           { dataField: "start", text: "Início" },
           { dataField: "end", text: "Fim" },
         ]} data={tasks} />
+        </>}
         </>
       )}
     </BaseForm>

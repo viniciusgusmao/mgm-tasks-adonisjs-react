@@ -35,7 +35,7 @@ const Form = ({
 }) => {
   const history = useHistory();
 
-  const data = initialValues_.fetchTask;
+  const data = initialValues_?.fetchTask;
   const initialValues = prepapreInitialValuesWithSameKeysOfTable(
     data,
     "project"
@@ -48,9 +48,11 @@ const Form = ({
   }
 
   const employeesMod = [];
-  initialValues["employees"].map((item) => {
-    employeesMod.push(item.id);
-  });
+  if (initialValues["employees"]){
+    initialValues["employees"].map((item) => {
+      employeesMod.push(item.id);
+    });
+  }
   initialValues["employees"] = employeesMod;
 
   return (

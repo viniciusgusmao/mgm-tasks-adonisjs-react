@@ -18,7 +18,7 @@ const typeDefs = `
     email: String!
     cellphone: String
     street: String
-    number: Int
+    number: String
     district: String
     city: String
     state: String

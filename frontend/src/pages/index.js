@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col'
 
 import Logo from 'components/Logo';
 import UserInfo from 'components/UserInfo';
-import Nav from 'components/Layout/Nav';
+import Nav from 'components/Nav';
 import { Redirect } from 'react-router-dom';
 
 import { isLogin } from 'utils';

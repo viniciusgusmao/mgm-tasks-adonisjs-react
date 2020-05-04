@@ -19,7 +19,7 @@ import { prepapreInitialValuesWithSameKeysOfTable } from "utils";
 
 const Form = ({ currentPath, initialValues: initialValues_, id }) => {
   const history = useHistory();
-  const data = initialValues_.fetchCustomer;
+  const data = initialValues_?.fetchCustomer;
   const initialValues = prepapreInitialValuesWithSameKeysOfTable(
     data,
     "company"
