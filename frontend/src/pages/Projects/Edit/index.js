@@ -28,6 +28,16 @@ const Edit = ({ currentPath, customersFill }) => {
         id
       }
     }
+    allProjectsWithSelectedTasks(id: ${id}){
+      tasks{
+        id
+        name
+        status
+        priority
+        start
+        end
+      }
+    }
   }
 `;
   const { loading, error, data } = useQuery(FETCH_PROJECT, {

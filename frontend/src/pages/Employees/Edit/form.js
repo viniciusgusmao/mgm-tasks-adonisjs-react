@@ -83,10 +83,7 @@ const Form = ({ currentPath, initialValues: initialValues_, id }) => {
                 </Col>
                 <Col lg={6}></Col>
                 <Col lg={2}>
-                  <BackButtonForm
-                    title="Voltar"
-                    handleClick={() => history.push(currentPath)}
-                  />
+                  <BackButtonForm />
                 </Col>
                 <Col lg={2}>
                   <Button title="Atualizar" handleClick={handleSubmit} />

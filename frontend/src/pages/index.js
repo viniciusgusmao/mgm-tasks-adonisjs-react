@@ -8,7 +8,7 @@ import UserInfo from 'components/UserInfo';
 import Nav from 'components/Layout/Nav';
 import { Redirect } from 'react-router-dom';
 
-import { isLogin  } from 'utils';
+import { isLogin } from 'utils';
 
 const Layout = ({children}) => {
   

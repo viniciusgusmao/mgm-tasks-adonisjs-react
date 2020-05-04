@@ -206,10 +206,7 @@ const Form = ({ currentPath, dataFillSelect }) => {
               <Row>
                 <Col lg={8}></Col>
                 <Col lg={2}>
-                  <BackButtonForm
-                    title="Voltar"
-                    handleClick={() => history.push(currentPath)}
-                  />
+                  <BackButtonForm />
                 </Col>
                 <Col lg={2}>
                   <Button title="Cadastrar" handleClick={handleSubmit} />

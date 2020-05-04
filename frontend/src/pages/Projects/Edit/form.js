@@ -15,6 +15,7 @@ import Col from "react-bootstrap/Col";
 import Button from "components/Button";
 import BackButtonForm from "components/BackButtonForm";
 import DeleteButton from "components/DeleteButton";
+import DataTable from "components/DataTable";
 
 import validation from "validations/projects";
 import BaseForm from "pages/BaseForm";
@@ -32,6 +33,8 @@ const Form = ({
 }) => {
   const history = useHistory();
 
+  const tasks = initialValues_.allProjectsWithSelectedTasks[0].tasks;
+  
   const data = initialValues_.fetchProject;
   const initialValues = prepapreInitialValuesWithSameKeysOfTable(
     data,
@@ -41,6 +44,7 @@ const Form = ({
   return (
     <BaseForm>
       {(store, update, destroy, errorApiRequest) => (
+        <>
         <Formik
           initialValues={initialValues}
           validationSchema={validation}
@@ -177,10 +181,7 @@ const Form = ({
                 </Col>
                 <Col lg={6}></Col>
                 <Col lg={2}>
-                  <BackButtonForm
-                    title="Voltar"
-                    handleClick={() => history.push(currentPath)}
-                  />
+                  <BackButtonForm />
                 </Col>
                 <Col lg={2}>
                   <Button title="Atualizar" handleClick={handleSubmit} />
@@ -189,6 +190,16 @@ const Form = ({
             </div>
           )}
         </Formik>
+        <h1 className="title-extra-table-form-edit">Tarefas EM ABERTO ou EM ANDAMENTO para este projeto.</h1>
+        <DataTable currentPath="/tasks" columns={[
+          { dataField: "id", text: "ID" },
+          { dataField: "name", text: "Nome" },
+          { dataField: "status", text: "Status" },
+          { dataField: "priority", text: "Prioridade" },
+          { dataField: "start", text: "Início" },
+          { dataField: "end", text: "Fim" },
+        ]} data={tasks} />
+        </>
       )}
     </BaseForm>
   );
