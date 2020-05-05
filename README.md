@@ -73,7 +73,7 @@ cd api/ && adonis migration:run
 ```bash
 cd api/ && adonis seed
 ```
-#### 2.3 Inicie a API
+#### 2.3 Inicie o servidor
 ```bash
 cd api/ && npm start
 ```
