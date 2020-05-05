@@ -43,17 +43,6 @@ Antes de iniciar a instalação do projeto, certifique-se de instalar globalment
 npm i -g @adonisjs/cli
 ```
 
-Ao clonar o projeto, vc verá a seguinte estrutura de arquivos:
-
-```bash
-├── api/
-├── frontend/
-├── mysql/
-├── .gitignore
-├── docker-compose.yml
-├── README.md
-```
-
 ### 1. Iniciar os containers do banco de dados e do phpMyAdmin
 Execute o comando abaixo na raiz do projeto.
 ```bash
