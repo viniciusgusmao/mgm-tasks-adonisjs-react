@@ -7,6 +7,8 @@ import { gql } from "apollo-boost";
 import SectionDashboard from "pages/Dashboard/SectionDashboard";
 import CustomerItem from "pages/Dashboard/Customers/CustomerItem";
 
+import { Redirect } from 'react-router-dom';
+
 import Loading from "components/Loading";
 
 const Customers = () => {
@@ -24,6 +26,8 @@ const Customers = () => {
   const { loading, error, data } = useQuery(QUERY, {
     pollInterval: 500,
   });
+
+  if (error) return <Redirect to="/login" /> 
 
   if (loading) return <Loading />;
 

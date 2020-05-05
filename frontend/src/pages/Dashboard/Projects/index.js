@@ -10,10 +10,11 @@ import { gql } from "apollo-boost";
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Loading from "components/Loading";
+import { Redirect } from 'react-router-dom'
 
 import { getAvailableDashboardProjectsStatusWithColor } from 'utils'
 
-const Projetos = () => {
+const Projects = () => {
 
   const QUERY = gql`
     {
@@ -28,6 +29,8 @@ const Projetos = () => {
     pollInterval: 500,
   });
 
+  if (error) return <Redirect to="/login" />
+
   if (loading) return <Loading />;
 
   const projectsColor = getAvailableDashboardProjectsStatusWithColor();
@@ -41,10 +44,10 @@ const Projetos = () => {
       <div className="container-dashboard-projetos">
       <Container>
         <Row>
-          {projectsColor.slice(0,3).map(item => <ProjectItem {...item} />)}
+          {projectsColor.slice(0,3).map(item => <ProjectItem key={item.id} {...item} />)}
         </Row>
         <Row>
-          {projectsColor.slice(3,6).map(item => <ProjectItem {...item} />)}
+          {projectsColor.slice(3,6).map(item => <ProjectItem key={item.id} {...item} />)}
         </Row>
       </Container>
       </div>
@@ -52,4 +55,4 @@ const Projetos = () => {
   );
 }
 
-export default Projetos;
+export default Projects;

@@ -18,17 +18,20 @@ const BaseForm = ({ children }) => {
         autoClose: 2000,
         closeButton: true,
       });
+
       if (delay)
         setTimeout(() => {
           history.push(currentPath);
         }, 2000);
       else history.push(currentPath);
+
     } else {
       toast.error(description, {
         position: toast.POSITION.TOP_CENTER,
         autoClose: 3000,
         closeButton: true,
       });
+      history.push(currentPath);
     }
   };
 

@@ -12,7 +12,8 @@ import { useQuery } from "@apollo/react-hooks";
 import Loading from "components/Loading";
 
 import DataTable from "components/DataTable";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
+
 
 const BaseIndex = ({ currentPath, titlePage, query, columns, idQueryGL }) => {
   const history = useHistory();
@@ -20,6 +21,10 @@ const BaseIndex = ({ currentPath, titlePage, query, columns, idQueryGL }) => {
   const { loading, error, data } = useQuery(query, {
     pollInterval: 500,
   });
+
+  if (error){
+    return <Redirect to="/login" />
+  } 
 
   if (loading) return <Loading />;
 

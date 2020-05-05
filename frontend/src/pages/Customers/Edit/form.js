@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
-
-import { useHistory } from "react-router-dom";
 
 import ErrorMsg from "components/ErrorMsg";
 import TextInput from "components/FormFields/TextInput";
@@ -18,7 +16,6 @@ import BaseForm from "pages/BaseForm";
 import { prepapreInitialValuesWithSameKeysOfTable } from "utils";
 
 const Form = ({ currentPath, initialValues: initialValues_, id }) => {
-  const history = useHistory();
   const data = initialValues_?.fetchCustomer;
   const initialValues = prepapreInitialValuesWithSameKeysOfTable(
     data,

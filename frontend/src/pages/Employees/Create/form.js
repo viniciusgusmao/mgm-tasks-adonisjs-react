@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
-
-import { useHistory } from "react-router-dom";
 
 import ErrorMsg from "components/ErrorMsg";
 import TextInput from "components/FormFields/TextInput";
@@ -15,10 +13,7 @@ import BackButtonForm from "components/BackButtonForm";
 import validation from "validations/employees";
 import BaseForm from "pages/BaseForm";
 
-const Form = ({ currentPath }) => {
-  const history = useHistory();
-
-  return (
+const Form = ({ currentPath }) => (
     <BaseForm>
       {(store, update, destroy, errorApiRequest) => (
         <Formik
@@ -85,7 +80,7 @@ const Form = ({ currentPath }) => {
         </Formik>
       )}
     </BaseForm>
-  );
-};
+);
+
 
 export default Form;

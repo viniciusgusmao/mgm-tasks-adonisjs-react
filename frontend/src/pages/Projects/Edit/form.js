@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
-
-import { useHistory } from "react-router-dom";
 
 import ErrorMsg from "components/ErrorMsg";
 import TextInput from "components/FormFields/TextInput";
@@ -31,8 +29,6 @@ const Form = ({
   initialValues: initialValues_,
   id,
 }) => {
-  const history = useHistory();
-
   const tasks = initialValues_?.allProjectsWithSelectedTasks[0]?.tasks;
   
   const data = initialValues_.fetchProject;

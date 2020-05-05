@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
-
-import { useHistory } from "react-router-dom";
 
 import ErrorMsg from "components/ErrorMsg";
 import TextInput from "components/FormFields/TextInput";
@@ -15,14 +13,11 @@ import Col from "react-bootstrap/Col";
 import Button from "components/Button";
 import BackButtonForm from "components/BackButtonForm";
 
-import { store } from "services/crud";
 import validation from "validations/projects";
 import BaseForm from "pages/BaseForm";
 import { getAvailableProjectStatus, joinDateTimeAndPrepareToDB } from "utils";
 
 const Form = ({ currentPath, customersFill }) => {
-  const history = useHistory();
-
   return (
     <BaseForm>
       {(store, update, destroy, errorApiRequest) => (

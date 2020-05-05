@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
 import { Formik } from "formik";
-
-import { useHistory } from "react-router-dom";
 
 import ErrorMsg from "components/ErrorMsg";
 import TextInput from "components/FormFields/TextInput";
@@ -17,7 +15,6 @@ import BaseForm from "pages/BaseForm";
 import { getIdCompany } from "utils";
 
 const Form = ({ currentPath }) => {
-  const history = useHistory();
   const company_id = getIdCompany();
 
   return (
