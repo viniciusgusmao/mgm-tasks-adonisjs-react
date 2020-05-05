@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Notification from "components/Notification";
 import Loading from "components/Loading";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";

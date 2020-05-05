@@ -7,13 +7,20 @@ import Logo from 'components/Logo';
 import UserInfo from 'components/UserInfo';
 import Nav from 'components/Nav';
 import { Redirect } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 import { isLogin } from 'utils';
 
 const Layout = ({children}) => {
   
-  if (!isLogin())
+  if (!isLogin()){
+    toast.error("Você não está logado.", {
+      position: toast.POSITION.TOP_CENTER,
+      autoClose: 1500,
+      closeButton: true,
+    });
     return <Redirect to="/login" />
+  }
 
   return (
     <Container className="container-pai">
