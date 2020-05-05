@@ -1,6 +1,5 @@
 export const isLogin = () => {
   const user = JSON.parse(localStorage.getItem("@user_gp"));
-  console.log(user);
   return Boolean(user);
 };
 

@@ -45,7 +45,8 @@ const Form = () => {
               const userTv = { token, id, email, name };
               setLoading(true);
               localStorage.setItem("@user_gp", JSON.stringify(userTv));
-              history.push("/dashboard");
+              window.location.href = "dashboard";
+              // history.push("/dashboard");
             })
             .catch((error) => {
               setLoading(false);

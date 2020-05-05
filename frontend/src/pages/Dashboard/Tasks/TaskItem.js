@@ -8,7 +8,7 @@ const TaskItem = (props) => {
   return (
     <div className="container-task-item" onClick={() => history.push(`/tasks/${props.id}/edit`)}>
       <div>
-        <MdToll size={22} />
+        <MdToll size={18} />
         <p>{props.name}</p>
       </div>
       <span>{props.status}</span>

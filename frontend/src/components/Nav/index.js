@@ -11,7 +11,7 @@ const Nav = () => {
   const location = useLocation();
   const { pathname } = location;
   const logout = () => {
-    localStorage.setItem("@user_gp", null);
+    localStorage.removeItem("@user_gp")
     history.push("/login");
   };
   return (
