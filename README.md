@@ -54,34 +54,35 @@ Ao clonar o projeto, vc verá a seguinte estrutura de arquivos:
 ├── README.md
 ```
 
-*Favor considerar todos os comandos abaixo na pasta raiz do projeto.*
-
 ### 1. Iniciar os containers do banco de dados e do phpMyAdmin
+Execute o comando abaixo na raiz do projeto.
 ```bash
 docker-compose up
 ```
 ### 2. Para configurar a API
+Acesse a pasta api/ e execute os comandos abaixo.
 #### 2.1 Instale as dependências
 ```bash
-cd api/ && npm install
+npm install
 ```
 #### 2.1 Execute as migrations
 ```bash
-cd api/ && adonis migration:run
+adonis migration:run
 ```
 #### 2.2 Execute os seeders para preenchimento no MySql de dados fakes
 ```bash
-cd api/ && adonis seed
+adonis seed
 ```
 #### 2.3 Inicie o servidor
 ```bash
-cd api/ && npm start
+npm start
 ```
 Feito isso, a API estará rodando na porta 8080 do servidor local http://localhost:8080/
 
 ### 3. Para configurar o Frontend
+Acesse a pasta frontend/ e execute o comando abaixo.
 ```bash
-cd frontend/ && npm install && npm start
+npm install && npm start
 ```
 Acesse http://localhost:3000/ para testar a aplicação. A tela de login já virá com as informações de email e senha para facilitar o processo de autenticação nesta simulação.
 
